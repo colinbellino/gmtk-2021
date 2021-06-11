@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d9faba923454a5cad26655791da1fbd, type: 3}
+  m_Name: Game Config
+  m_EditorClassIdentifier: 
+  DebugFSM: 0
+  LockFPS: -1
+  GridSize:
+    x: 10
+    y: 2
+    z: 10
+  PathStart:
+    x: 0
+    y: 1
+    z: 0
+  PathEnd:
+    x: 1
+    y: 1
+    z: 1
+  SlideSpeed: 10
+  AudioMixer: {fileID: 24100000, guid: c00711887b3714031932c58a1ac16396, type: 2}
+  MusicAudioMixerGroup: {fileID: -1804572004088458924, guid: c00711887b3714031932c58a1ac16396, type: 2}
+  SoundsAudioMixerGroup: {fileID: 3053297684183750015, guid: c00711887b3714031932c58a1ac16396, type: 2}
+  DefaultAudioSnapshot: {fileID: 24500006, guid: c00711887b3714031932c58a1ac16396, type: 2}
+  PauseAudioSnapshot: {fileID: 6893898828190700123, guid: c00711887b3714031932c58a1ac16396, type: 2}
+  MusicVolume: 0.85
+  SoundVolume: 1
+  MenuTextAppearClip: {fileID: 8300000, guid: 0716cfff5c54dd542a774a3995d00888, type: 3}
+  MenuConfirmClip: {fileID: 8300000, guid: 4c1368389c5532e4faa388da887d74e9, type: 3}
+  TileRendererPrefab: {fileID: 5808651097580335488, guid: 1fb04161c3eae487da9342e4eb2cc187, type: 3}
+  UnitRendererPrefab: {fileID: 2177991408146733114, guid: 6bcb3d9248613448c99b3e87a73cfdae, type: 3}
+  UnitSprites:
+  - {fileID: 3827289592664535785, guid: 99c6ab8a341274c38b6ec1f63225f6ed, type: 3}
+  - {fileID: 4827980482346254395, guid: 2eabdfb626b484ac5b0591bc58a715a5, type: 3}
+  - {fileID: -2795891625294991893, guid: 59eda540ba0bc49bc90375d0cc0843e3, type: 3}
+  AllianceColors:
+  - {r: 0.23629406, g: 0.32317835, b: 0.8490566, a: 1}
+  - {r: 0.735849, g: 0.07289071, b: 0.07289071, a: 1}
