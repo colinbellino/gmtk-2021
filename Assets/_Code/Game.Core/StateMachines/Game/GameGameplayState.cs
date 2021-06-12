@@ -9,7 +9,9 @@ namespace Game.Core.StateMachines.Game
 {
 	public class GameGameplayState : BaseGameState
 	{
-		private GameObject _level;
+		private Transform _levelsContainer;
+		private int _currentLevelIndex;
+		private bool _isTransitioning;
 
 		public GameGameplayState(GameFSM fsm, GameSingleton game) : base(fsm, game) { }
 
@@ -19,20 +21,26 @@ namespace Game.Core.StateMachines.Game
 
 			_ = _ui.FadeOut();
 
+			_isTransitioning = false;
+
 			_ui.ShowDebug();
 			_controls.Gameplay.Enable();
 
-			if (_level == null)
+			_levelsContainer = GameObject.Find("Levels").transform;
+			for (int levelIndex = 0; levelIndex < _levelsContainer.childCount; levelIndex++)
 			{
-				_level = GameObject.Find("Level").gameObject;
+				var level = _levelsContainer.GetChild(levelIndex);
+				UnityEngine.Debug.Log(level);
+				level.gameObject.SetActive(levelIndex == _currentLevelIndex);
 			}
-			_level.SetActive(true);
 
 			_state.Entities = new List<Entity>();
+
+			var leaderSpawner = GameObject.FindObjectOfType<LeaderSpawner>();
 			var leader = new Entity
 			{
 				Name = "Leader",
-				Position = new float2(5, 5),
+				Position = (Vector2)leaderSpawner.transform.position,
 				PlayerControlled = true,
 				Color = _config.LeaderColor,
 				RecruitmentRadius = 2f,
@@ -63,8 +71,6 @@ namespace Game.Core.StateMachines.Game
 					AttackRadius = 2f,
 				};
 				_state.Entities.Add(entity);
-
-				// GameObject.Destroy(spawner.gameObject);
 			}
 
 			var copSpawners = GameObject.FindObjectsOfType<CopSpawner>();
@@ -84,8 +90,6 @@ namespace Game.Core.StateMachines.Game
 					CanBeHit = true,
 				};
 				_state.Entities.Add(entity);
-
-				// GameObject.Destroy(spawner.gameObject);
 			}
 
 			var crateSpawners = GameObject.FindObjectsOfType<CrateSpawner>();
@@ -104,8 +108,22 @@ namespace Game.Core.StateMachines.Game
 					SortingOrder = 1,
 				};
 				_state.Entities.Add(entity);
+			}
 
-				// GameObject.Destroy(spawner.gameObject);
+			var exitSpawners = GameObject.FindObjectsOfType<ExitSpawner>();
+			for (int i = 0; i < exitSpawners.Length; i++)
+			{
+				var spawner = exitSpawners[i];
+				var entity = new Entity
+				{
+					Name = "Exit " + i,
+					Position = (Vector2)spawner.transform.position,
+					RigidbodyType = RigidbodyType2D.Static,
+					Sprite = _config.ExitSprite,
+					TriggerVictory = true,
+					AttackRadius = 0.5f,
+				};
+				_state.Entities.Add(entity);
 			}
 
 			foreach (var entity in _state.Entities)
@@ -124,12 +142,12 @@ namespace Game.Core.StateMachines.Game
 
 			if (Keyboard.current.f1Key.wasPressedThisFrame)
 			{
-				_fsm.Fire(GameFSM.Triggers.Won);
+				NextLevel();
 			}
 
 			if (Keyboard.current.f2Key.wasPressedThisFrame)
 			{
-				_fsm.Fire(GameFSM.Triggers.Won);
+				GameOver();
 			}
 
 			// Player attack
@@ -178,7 +196,6 @@ namespace Game.Core.StateMachines.Game
 				}
 			}
 
-			// for (int entityIndex = 0; entityIndex < _state.Entities.Count; entityIndex++)
 			for (int entityIndex = _state.Entities.Count - 1; entityIndex >= 0; entityIndex--)
 			{
 				var entity = _state.Entities[entityIndex];
@@ -187,7 +204,7 @@ namespace Game.Core.StateMachines.Game
 				{
 					if (entity.HealthCurrent == 0)
 					{
-						_fsm.Fire(GameFSM.Triggers.Lost);
+						GameOver();
 					}
 
 					// Movement
@@ -216,6 +233,19 @@ namespace Game.Core.StateMachines.Game
 							otherEntity.Flock = _followersFlock;
 							otherEntity.CanBeHit = true;
 							otherEntity.Component.Collider.gameObject.SetActive(false);
+						}
+					}
+				}
+
+				if (entity.TriggerVictory)
+				{
+					var colliders = Physics2D.OverlapCircleAll(entity.Position, entity.AttackRadius, LayerMask.GetMask("Entity"));
+					foreach (var collider in colliders)
+					{
+						var otherComponent = collider.GetComponentInParent<EntityComponent>();
+						if (otherComponent != null && otherComponent.Entity.PlayerControlled)
+						{
+							NextLevel();
 						}
 					}
 				}
@@ -334,7 +364,7 @@ namespace Game.Core.StateMachines.Game
 							AttackRadius = 0.1f,
 							AttackOnCollision = true,
 							Direction = direction,
-							MoveSpeed = 10f,
+							MoveSpeed = 15f,
 						};
 						projectile.Velocity = direction * projectile.MoveSpeed;
 						Rendering.SpawnEntity(projectile, _config.EntityPrefab.GetComponent<EntityComponent>());
@@ -361,7 +391,34 @@ namespace Game.Core.StateMachines.Game
 				GameObject.Destroy(entity.Component.gameObject);
 			}
 			_state.Entities.Clear();
-			_level.SetActive(false);
+			_levelsContainer.GetChild(_currentLevelIndex).gameObject.SetActive(false);
+		}
+
+		private void NextLevel()
+		{
+			if (_isTransitioning)
+			{
+				return;
+			}
+			_isTransitioning = true;
+			if (_currentLevelIndex == _levelsContainer.childCount - 1)
+			{
+				UnityEngine.Debug.Log("Won");
+				_fsm.Fire(GameFSM.Triggers.Won);
+				return;
+			}
+			_currentLevelIndex += 1;
+			_fsm.Fire(GameFSM.Triggers.NextLevel);
+		}
+
+		private void GameOver()
+		{
+			if (_isTransitioning)
+			{
+				return;
+			}
+			_isTransitioning = true;
+			_fsm.Fire(GameFSM.Triggers.Lost);
 		}
 	}
 }

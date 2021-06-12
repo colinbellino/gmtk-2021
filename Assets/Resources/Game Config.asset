@@ -22,6 +22,7 @@ MonoBehaviour:
   CopColor: {r: 0.3372549, g: 0.40784317, b: 0.83921576, a: 1}
   CopSprite: {fileID: -8964298720854551499, guid: c4d5d473c769f405b971b2580baf3d5e, type: 3}
   ProjectileSprite: {fileID: -4711204389694023198, guid: 057c84a227f92f447a62b53cc75457ed, type: 3}
+  ExitSprite: {fileID: -7050129638846038990, guid: df5ae761caeb2498eb0a1cdf3a2928fd, type: 3}
   AudioMixer: {fileID: 24100000, guid: c00711887b3714031932c58a1ac16396, type: 2}
   MusicAudioMixerGroup: {fileID: -1804572004088458924, guid: c00711887b3714031932c58a1ac16396, type: 2}
   SoundsAudioMixerGroup: {fileID: 3053297684183750015, guid: c00711887b3714031932c58a1ac16396, type: 2}

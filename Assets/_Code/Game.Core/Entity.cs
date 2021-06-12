@@ -32,6 +32,7 @@ namespace Game.Core
 		public bool AttackOnCollision;
 		public float2 Direction = Vector2.right;
 		public float2 FlockDirection;
+		public bool TriggerVictory;
 
 		public EntityComponent Component;
 	}

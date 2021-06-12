@@ -1,5 +1,4 @@
-﻿using Unity.Mathematics;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Audio;
 
 namespace Game.Core
@@ -18,6 +17,7 @@ namespace Game.Core
 		public Color CopColor;
 		public Sprite CopSprite;
 		public Sprite ProjectileSprite;
+		public Sprite ExitSprite;
 
 		[Header("Audio")]
 		public AudioMixer AudioMixer;
