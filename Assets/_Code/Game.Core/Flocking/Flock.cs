@@ -31,7 +31,7 @@ public class Flock : MonoBehaviour
 	// Update is called once per frame
 	public void Tick(Entity entity)
 	{
-		List<Transform> context = GetNearbyObjects(entity);
+		var context = GetNearbyObjects(entity);
 
 		if (Time.time < entity.AttackTimestamp)
 		{
@@ -52,12 +52,12 @@ public class Flock : MonoBehaviour
 	List<Transform> GetNearbyObjects(Entity entity)
 	{
 		List<Transform> context = new List<Transform>();
-		Collider2D[] contextColliders = Physics2D.OverlapCircleAll(entity.Component.transform.position, neighborRadius, LayerMask.GetMask("Entity", "Obstacle"));
-		foreach (Collider2D c in contextColliders)
+		var hits = Physics2D.CircleCastAll(entity.Component.transform.position, neighborRadius, Vector3.zero, 0, LayerMask.GetMask("Entity", "Obstacle"));
+		foreach (var hit in hits)
 		{
-			if (c != entity.Component.FlockCollider)
+			if (hit.collider != entity.Component.FlockCollider)
 			{
-				context.Add(c.transform);
+				context.Add(hit.collider.transform);
 			}
 		}
 		return context;

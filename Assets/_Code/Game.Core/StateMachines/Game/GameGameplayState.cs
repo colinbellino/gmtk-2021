@@ -297,6 +297,7 @@ namespace Game.Core.StateMachines.Game
 				var otherComponent = collider.GetComponentInParent<EntityComponent>();
 				var otherEntity = otherComponent.Entity;
 
+				// TODO: Check if has line of sight
 				if (otherEntity.CanBeHit && otherEntity.Alliance != entity.Alliance && otherEntity.Alliance != Alliances.None)
 				{
 					UnityEngine.Debug.Log(entity.Name + " SHOOT => " + otherEntity.Name);
@@ -317,7 +318,7 @@ namespace Game.Core.StateMachines.Game
 						AttackRadius = 0.1f,
 						AttackOnCollision = true,
 						Direction = direction,
-						MoveSpeed = 1f,
+						MoveSpeed = 10f,
 					};
 					projectile.Velocity = direction * projectile.MoveSpeed;
 					Rendering.SpawnEntity(projectile, _config.EntityPrefab.GetComponent<EntityComponent>());
