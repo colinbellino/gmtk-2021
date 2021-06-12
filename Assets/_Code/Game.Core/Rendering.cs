@@ -22,6 +22,7 @@ namespace Game.Core
 
 				if (entity.Static == false)
 				{
+					entity.Component.transform.right = (Vector2)entity.Direction;
 					entity.Component.Rigidbody.velocity = entity.Velocity;
 				}
 

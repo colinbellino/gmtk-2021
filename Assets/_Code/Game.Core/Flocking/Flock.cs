@@ -28,25 +28,22 @@ public class Flock : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	public void Tick(List<Entity> entities)
+	public void Tick(Entity entity)
 	{
-		foreach (var entity in entities)
+		List<Transform> context = GetNearbyObjects(entity.Component.FlockAgent);
+
+		if (Time.time < entity.AttackTimestamp)
 		{
-			List<Transform> context = GetNearbyObjects(entity.Component.FlockAgent);
-
-			if (Time.time < entity.AttackTimestamp)
-			{
-				continue;
-			}
-
-			Vector2 move = behavior.CalculateMove(entity.Component.FlockAgent, context, this);
-			move *= driveFactor;
-			if (move.sqrMagnitude > squareMaxSpeed)
-			{
-				move = move.normalized * maxSpeed;
-			}
-			entity.Component.FlockAgent.Move(move);
+			return;
 		}
+
+		Vector2 move = behavior.CalculateMove(entity.Component.FlockAgent, context, this);
+		move *= driveFactor;
+		if (move.sqrMagnitude > squareMaxSpeed)
+		{
+			move = move.normalized * maxSpeed;
+		}
+		entity.Component.FlockAgent.Move(move);
 	}
 
 	List<Transform> GetNearbyObjects(FlockAgent agent)

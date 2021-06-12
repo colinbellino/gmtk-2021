@@ -28,6 +28,10 @@ namespace Game.Core
 		public bool FlaggedForDestroy;
 		public float DestroyTimestamp;
 		public int ColliderType;
+		public bool ShootOnSight;
+		public bool AttackOnCollision;
+		public bool ProjectileMovement;
+		public float2 Direction = Vector2.right;
 
 		public EntityComponent Component;
 	}

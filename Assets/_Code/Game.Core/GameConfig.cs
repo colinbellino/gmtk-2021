@@ -16,6 +16,8 @@ namespace Game.Core
 		public Sprite FollowerSprite;
 		public Sprite CrateSprite;
 		public Color CopColor;
+		public Sprite CopSprite;
+		public Sprite ProjectileSprite;
 
 		[Header("Audio")]
 		public AudioMixer AudioMixer;
