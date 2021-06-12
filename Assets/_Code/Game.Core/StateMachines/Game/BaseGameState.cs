@@ -10,7 +10,7 @@ namespace Game.Core.StateMachines.Game
 
 		protected GameConfig _config => _game.Config;
 		protected GameUI _ui => _game.UI;
-		protected CameraRig _camera => _game.CameraRig;
+		protected CameraRig _cameraRig => _game.CameraRig;
 		protected GameControls _controls => _game.Controls;
 		protected GameState _state => _game.State;
 		protected AudioPlayer _audioPlayer => _game.AudioPlayer;

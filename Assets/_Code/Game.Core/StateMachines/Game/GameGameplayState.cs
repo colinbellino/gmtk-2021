@@ -24,19 +24,35 @@ namespace Game.Core.StateMachines.Game
 				Name = "Leader",
 				Position = new float2(5, 5),
 				PlayerControlled = true,
-				Color = Color.red,
-				RecruitmentRadius = 3f,
+				Color = _config.LeaderColor,
+				RecruitmentRadius = 2f,
+				Sprite = _config.LeaderSprite,
 			};
 			_state.Entities.Add(leader);
 
-			for (int i = 0; i < 10; i++)
+			for (int i = 0; i < 20; i++)
 			{
 				var entity = new Entity
 				{
 					Name = "Follower " + i,
-					Position = UnityEngine.Random.insideUnitCircle * 100 * 0.08f,
-					Color = Color.green,
+					Position = UnityEngine.Random.insideUnitCircle * 40 * 0.08f,
+					Color = _config.LeaderColor,
 					WillFollowerLeader = true,
+					Sprite = _config.FollowerSprite,
+				};
+				_state.Entities.Add(entity);
+			}
+
+			var crateSpawners = GameObject.FindObjectsOfType<CrateSpawner>();
+			for (int i = 0; i < crateSpawners.Length; i++)
+			{
+				CrateSpawner spawner = crateSpawners[i];
+				var entity = new Entity
+				{
+					Name = "Crate " + i,
+					Position = (Vector2)spawner.transform.position,
+					Sprite = _config.CrateSprite,
+					Static = true,
 				};
 				_state.Entities.Add(entity);
 			}
@@ -57,6 +73,8 @@ namespace Game.Core.StateMachines.Game
 			var leader = _state.Entities.First(e => e.PlayerControlled);
 			var followers = _state.Entities.Where(e => e.Flock == _followersFlock).ToList();
 
+			_cameraRig.transform.position = leader.Component.transform.position;
+
 			{
 				var entity = leader;
 
@@ -70,12 +88,13 @@ namespace Game.Core.StateMachines.Game
 						continue;
 					}
 
-					var otherComponent = collider.GetComponent<EntityComponent>();
+					var otherComponent = collider.GetComponentInParent<EntityComponent>();
 					var otherEntity = otherComponent.Entity;
 
 					if (otherEntity.WillFollowerLeader && otherEntity.Flock == null)
 					{
 						otherEntity.Flock = _followersFlock;
+						otherEntity.Component.Collider.gameObject.SetActive(false);
 					}
 				}
 			}

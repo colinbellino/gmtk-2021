@@ -11,6 +11,11 @@ namespace Game.Core
 		public bool DebugFSM;
 		public int LockFPS = 60;
 		public GameObject EntityPrefab;
+		public Sprite LeaderSprite;
+		public Color LeaderColor;
+		public Sprite FollowerSprite;
+		public Sprite CrateSprite;
+		public Color CopColor;
 
 		[Header("Audio")]
 		public AudioMixer AudioMixer;

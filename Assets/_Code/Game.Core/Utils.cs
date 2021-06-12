@@ -50,11 +50,22 @@ namespace Game.Core
 		public static void SpawnEntity(Entity entity, EntityComponent entityPrefab)
 		{
 			var component = GameObject.Instantiate(entityPrefab, GridToWorldPosition(entity.Position), Quaternion.identity);
+			component.name = entity.Name;
+
+			component.SpriteRenderer.sprite = entity.Sprite;
 			component.SpriteRenderer.material = GameObject.Instantiate(component.SpriteRenderer.material);
 			component.SpriteRenderer.material.SetColor("ReplacementColor2", entity.Color);
-			component.name = entity.Name;
+
+			component.RecruitmentRadiusRenderer.transform.localScale = new Vector2(entity.RecruitmentRadius * 2, entity.RecruitmentRadius * 2);
+
+			if (entity.Static)
+			{
+				component.gameObject.isStatic = true;
+				component.Rigidbody.bodyType = RigidbodyType2D.Static;
+			}
+
 			component.Entity = entity;
-			component.RecruitmentRadiusRenderer.transform.localScale = new Vector2(entity.RecruitmentRadius, entity.RecruitmentRadius);
+
 			entity.Component = component;
 		}
 
