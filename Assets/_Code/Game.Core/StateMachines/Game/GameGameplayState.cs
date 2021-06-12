@@ -9,14 +9,24 @@ namespace Game.Core.StateMachines.Game
 {
 	public class GameGameplayState : BaseGameState
 	{
+		private GameObject _level;
+
 		public GameGameplayState(GameFSM fsm, GameSingleton game) : base(fsm, game) { }
 
 		public override async UniTask Enter()
 		{
 			await base.Enter();
 
+			_ = _ui.FadeOut();
+
 			_ui.ShowDebug();
 			_controls.Gameplay.Enable();
+
+			if (_level == null)
+			{
+				_level = GameObject.Find("Level").gameObject;
+			}
+			_level.SetActive(true);
 
 			_state.Entities = new List<Entity>();
 			var leader = new Entity
@@ -31,6 +41,8 @@ namespace Game.Core.StateMachines.Game
 				Alliance = Alliances.Ally,
 				ColliderType = 1,
 				SortingOrder = 1,
+				MoveSpeed = 10,
+				AttackRadius = 2f,
 			};
 			_state.Entities.Add(leader);
 
@@ -47,10 +59,12 @@ namespace Game.Core.StateMachines.Game
 					Sprite = _config.FollowerSprite,
 					Alliance = Alliances.Ally,
 					ColliderType = 1,
+					MoveSpeed = 10,
+					AttackRadius = 2f,
 				};
 				_state.Entities.Add(entity);
 
-				GameObject.Destroy(spawner.gameObject);
+				// GameObject.Destroy(spawner.gameObject);
 			}
 
 			var copSpawners = GameObject.FindObjectsOfType<CopSpawner>();
@@ -66,11 +80,12 @@ namespace Game.Core.StateMachines.Game
 					Alliance = Alliances.Foe,
 					ColliderType = 1,
 					ShootOnSight = true,
-					AttackRadius = 3,
+					AttackRadius = 8,
+					CanBeHit = true,
 				};
 				_state.Entities.Add(entity);
 
-				GameObject.Destroy(spawner.gameObject);
+				// GameObject.Destroy(spawner.gameObject);
 			}
 
 			var crateSpawners = GameObject.FindObjectsOfType<CrateSpawner>();
@@ -82,7 +97,7 @@ namespace Game.Core.StateMachines.Game
 					Name = "Crate " + i,
 					Position = (Vector2)spawner.transform.position,
 					Sprite = _config.CrateSprite,
-					Static = true,
+					RigidbodyType = RigidbodyType2D.Static,
 					CanBeHit = true,
 					HealthCurrent = 4,
 					HealthMax = 4,
@@ -90,7 +105,7 @@ namespace Game.Core.StateMachines.Game
 				};
 				_state.Entities.Add(entity);
 
-				GameObject.Destroy(spawner.gameObject);
+				// GameObject.Destroy(spawner.gameObject);
 			}
 
 			foreach (var entity in _state.Entities)
@@ -98,7 +113,7 @@ namespace Game.Core.StateMachines.Game
 				Rendering.SpawnEntity(entity, _config.EntityPrefab.GetComponent<EntityComponent>());
 			}
 
-			_followersFlock.FollowTarget = leader.Component.transform;
+			_followersFlock.FollowTarget = leader;
 		}
 
 		public override void Tick()
@@ -151,14 +166,6 @@ namespace Game.Core.StateMachines.Game
 							var damage = 1;
 							otherEntity.HealthCurrent = math.max(0, otherEntity.HealthCurrent - damage);
 
-							if (otherEntity.HealthCurrent == 0)
-							{
-								otherEntity.Component.Animator.Play("Destroy");
-								otherEntity.FlaggedForDestroy = true;
-								otherEntity.DestroyTimestamp = Time.time + 0.5f;
-								// otherEntity.CanBeHit = false;
-							}
-
 							targetsCount += 1;
 						}
 					}
@@ -171,14 +178,20 @@ namespace Game.Core.StateMachines.Game
 				}
 			}
 
-			for (int entityIndex = 0; entityIndex < _state.Entities.Count; entityIndex++)
+			// for (int entityIndex = 0; entityIndex < _state.Entities.Count; entityIndex++)
+			for (int entityIndex = _state.Entities.Count - 1; entityIndex >= 0; entityIndex--)
 			{
-				Entity entity = _state.Entities[entityIndex];
+				var entity = _state.Entities[entityIndex];
 
 				if (entity.PlayerControlled)
 				{
+					if (entity.HealthCurrent == 0)
+					{
+						_fsm.Fire(GameFSM.Triggers.Lost);
+					}
+
 					// Movement
-					entity.Velocity = (float2)moveInput * Time.deltaTime * 1000f;
+					entity.Velocity = (float2)moveInput * entity.MoveSpeed;
 
 					// Camera
 					_cameraRig.transform.position = entity.Component.transform.position;
@@ -204,6 +217,13 @@ namespace Game.Core.StateMachines.Game
 					}
 				}
 
+				if (entity.HealthCurrent <= 0 && entity.FlaggedForDestroy == false)
+				{
+					entity.Component.Animator.Play("Destroy");
+					entity.FlaggedForDestroy = true;
+					entity.DestroyTimestamp = Time.time + 0.5f;
+				}
+
 				if (entity.ShootOnSight)
 				{
 					Shoot(entity);
@@ -214,9 +234,44 @@ namespace Game.Core.StateMachines.Game
 					entity.Flock.Tick(entity);
 				}
 
-				if (entity.ProjectileMovement)
+				if (entity.AttackOnCollision)
 				{
+					var colliders = Physics2D.OverlapCircleAll(entity.Position, entity.AttackRadius, LayerMask.GetMask("Entity", "Obstacle"));
+					foreach (var collider in colliders)
+					{
+						if (collider == entity.Component.Collider)
+						{
+							continue;
+						}
 
+						var otherComponent = collider.GetComponentInParent<EntityComponent>();
+						if (otherComponent == null)
+						{
+							// Obstacle
+						}
+						else
+						{
+							var otherEntity = otherComponent.Entity;
+							if (!otherEntity.CanBeHit || otherEntity.Alliance == entity.Alliance)
+							{
+								continue;
+							}
+
+							var damage = 1;
+							otherEntity.HealthCurrent = math.max(0, otherEntity.HealthCurrent - damage);
+						}
+
+						UnityEngine.Debug.Log(entity.Name + " => " + collider.name);
+						entity.HealthCurrent = 0;
+						entity.Velocity = 0;
+						entity.AttackOnCollision = false;
+					}
+				}
+
+				if (entity.FlaggedForDestroy && Time.time > entity.DestroyTimestamp)
+				{
+					GameObject.Destroy(entity.Component.gameObject);
+					_state.Entities.RemoveAt(entityIndex);
 				}
 			}
 
@@ -242,37 +297,29 @@ namespace Game.Core.StateMachines.Game
 				var otherComponent = collider.GetComponentInParent<EntityComponent>();
 				var otherEntity = otherComponent.Entity;
 
-				if (otherEntity.CanBeHit && otherEntity.Alliance != entity.Alliance)
+				if (otherEntity.CanBeHit && otherEntity.Alliance != entity.Alliance && otherEntity.Alliance != Alliances.None)
 				{
 					UnityEngine.Debug.Log(entity.Name + " SHOOT => " + otherEntity.Name);
-					// var damage = 1;
-					// otherEntity.HealthCurrent = math.max(0, otherEntity.HealthCurrent - damage);
 
-					// if (otherEntity.HealthCurrent == 0)
-					// {
-					// 	otherEntity.Component.Animator.Play("Destroy");
-					// 	otherEntity.FlaggedForDestroy = true;
-					// 	otherEntity.DestroyTimestamp = Time.time + 0.5f;
-					// 	// otherEntity.CanBeHit = false;
-					// }
-
-					var direction = entity.Position - otherEntity.Position;
+					var direction = math.normalizesafe(otherEntity.Position - entity.Position);
 
 					var projectile = new Entity
 					{
 						Name = "Projectile",
-						Position = entity.Position,
+						Position = entity.Position + direction * 0.5f,
 						Color = entity.Color,
+						RigidbodyType = RigidbodyType2D.Kinematic,
+						ColliderScale = 0.1f,
 						Sprite = _config.ProjectileSprite,
 						Alliance = entity.Alliance,
 						ColliderType = 1,
 						SortingOrder = 1,
-						AttackRadius = 0.2f,
+						AttackRadius = 0.1f,
 						AttackOnCollision = true,
-						ProjectileMovement = true,
-						Velocity = new float2(0, 1) * 10,
 						Direction = direction,
+						MoveSpeed = 1f,
 					};
+					projectile.Velocity = direction * projectile.MoveSpeed;
 					Rendering.SpawnEntity(projectile, _config.EntityPrefab.GetComponent<EntityComponent>());
 					_state.Entities.Add(projectile);
 
@@ -294,6 +341,14 @@ namespace Game.Core.StateMachines.Game
 			await base.Exit();
 
 			_controls.Gameplay.Disable();
+			await _ui.FadeIn(Color.black);
+
+			foreach (var entity in _state.Entities)
+			{
+				GameObject.Destroy(entity.Component.gameObject);
+			}
+			_state.Entities.Clear();
+			_level.SetActive(false);
 		}
 	}
 }

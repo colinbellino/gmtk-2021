@@ -20,15 +20,10 @@ namespace Game.Core
 
 				entity.Component.SpriteRenderer.sortingOrder = entity.SortingOrder;
 
-				if (entity.Static == false)
+				if (entity.RigidbodyType != RigidbodyType2D.Static)
 				{
 					entity.Component.transform.right = (Vector2)entity.Direction;
 					entity.Component.Rigidbody.velocity = entity.Velocity;
-				}
-
-				if (entity.FlaggedForDestroy && Time.time > entity.DestroyTimestamp)
-				{
-					entity.Component.gameObject.SetActive(false);
 				}
 
 				entity.Component.UI.gameObject.SetActive(entity.HealthCurrent != entity.HealthMax && entity.HealthCurrent > 0);
@@ -55,13 +50,11 @@ namespace Game.Core
 				1 => component.CircleCollider,
 				_ => component.BoxCollider,
 			};
+			component.Collider.transform.localScale = Vector3.one * entity.ColliderScale;
 			component.Collider.gameObject.SetActive(true);
 
-			if (entity.Static)
-			{
-				component.gameObject.isStatic = true;
-				component.Rigidbody.bodyType = RigidbodyType2D.Static;
-			}
+			component.Rigidbody.bodyType = entity.RigidbodyType;
+			component.gameObject.isStatic = entity.RigidbodyType == RigidbodyType2D.Static;
 
 			component.Entity = entity;
 

@@ -12,26 +12,27 @@ namespace Game.Core
 		public float2 Velocity;
 		public Color Color;
 		public Flock Flock;
-		public float MoveSpeed = 500f;
+		public float MoveSpeed;
 		public float RecruitmentRadius;
-		public float AttackRadius = 2f;
 		public bool PlayerControlled;
 		public bool WillFollowerLeader;
-		public bool Static;
+		public RigidbodyType2D RigidbodyType;
 		public bool CanBeHit;
 		public Alliances Alliance;
 		public int HealthCurrent = 1;
 		public int HealthMax = 1;
+		public float AttackRadius;
 		public float AttackTimestamp;
 		public float AttackCooldown = 0.5f;
 		public int SortingOrder;
 		public bool FlaggedForDestroy;
 		public float DestroyTimestamp;
 		public int ColliderType;
+		public float ColliderScale = 1;
 		public bool ShootOnSight;
 		public bool AttackOnCollision;
-		public bool ProjectileMovement;
 		public float2 Direction = Vector2.right;
+		public float2 FlockDirection;
 
 		public EntityComponent Component;
 	}

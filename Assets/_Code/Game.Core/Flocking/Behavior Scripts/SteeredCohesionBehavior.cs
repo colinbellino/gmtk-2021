@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Game.Core;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Flock/Behavior/Steered Cohesion")]
@@ -9,7 +9,7 @@ public class SteeredCohesionBehavior : FilteredFlockBehavior
 	Vector2 currentVelocity;
 	public float agentSmoothTime = 0.5f;
 
-	public override Vector2 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock)
+	public override Vector2 CalculateMove(Entity entity, List<Transform> context, Flock flock)
 	{
 		//if no neighbors, return no adjustment
 		if (context.Count == 0)
@@ -17,7 +17,7 @@ public class SteeredCohesionBehavior : FilteredFlockBehavior
 
 		//add all points together and average
 		Vector2 cohesionMove = Vector2.zero;
-		List<Transform> filteredContext = (filter == null) ? context : filter.Filter(agent, context);
+		List<Transform> filteredContext = (filter == null) ? context : filter.Filter(entity, context);
 		foreach (Transform item in filteredContext)
 		{
 			cohesionMove += (Vector2)item.position;
@@ -25,8 +25,8 @@ public class SteeredCohesionBehavior : FilteredFlockBehavior
 		cohesionMove /= context.Count;
 
 		//create offset from agent position
-		cohesionMove -= (Vector2)agent.transform.position;
-		cohesionMove = Vector2.SmoothDamp(agent.Direction, cohesionMove, ref currentVelocity, agentSmoothTime);
+		cohesionMove -= (Vector2)entity.Component.transform.position;
+		cohesionMove = Vector2.SmoothDamp(entity.FlockDirection, cohesionMove, ref currentVelocity, agentSmoothTime);
 		return cohesionMove;
 	}
 }

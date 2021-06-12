@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 534d11c4890c6480890fc70a1c2b99a7, type: 3}
-  m_Name: Composite
+  m_Name: Followers Protecting Leader
   m_EditorClassIdentifier: 
   behaviors:
   - {fileID: 11400000, guid: 53563423491b243f583dd98ba6aa457a, type: 2}
   - {fileID: 11400000, guid: 8f924fe6f4064480ea9c5871fc2bae9f, type: 2}
   - {fileID: 11400000, guid: ed174d9dff07e4820970de5bc01605cf, type: 2}
-  - {fileID: 11400000, guid: e07f3425639294c059ea8ca0262299db, type: 2}
   - {fileID: 11400000, guid: cf879057a97c84fcc88d312825bb118c, type: 2}
+  - {fileID: 11400000, guid: 16304fc6979da4ca4a943d1a5761dff0, type: 2}
   weights:
   - 1
   - 2
   - 1
-  - 0
   - 5
+  - 2

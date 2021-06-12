@@ -196,7 +196,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8543916317417872559}
   - component: {fileID: 9005532530728875798}
-  - component: {fileID: 5275935017261798555}
   - component: {fileID: 4757951865274085518}
   m_Layer: 0
   m_Name: Entity
@@ -217,9 +216,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8571006399408841998}
+  - {fileID: 3103666850172814143}
   - {fileID: 5776584288466102022}
   - {fileID: 7334989028658498638}
-  - {fileID: 3103666850172814143}
   - {fileID: 1045768362702964006}
   - {fileID: 6080880730775956401}
   - {fileID: 5697144770060964675}
@@ -241,29 +240,14 @@ MonoBehaviour:
   SpriteRenderer: {fileID: 835740370884636407}
   Animator: {fileID: 3158247556313448379}
   Rigidbody: {fileID: 4757951865274085518}
+  FlockCollider: {fileID: 2464453100352452875}
   BoxCollider: {fileID: 7473249917270519626}
   CircleCollider: {fileID: 2430239601499677523}
-  FlockAgent: {fileID: 5275935017261798555}
   RecruitmentRadiusRenderer: {fileID: 6072301362824725651}
   AttackRadiusRenderer: {fileID: 2285634449029134210}
   UI: {fileID: 9213673161092891724}
   HealthSlider: {fileID: 87262908612551054}
   Collider: {fileID: 7473249917270519626}
---- !u!114 &5275935017261798555
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2177991408146733114}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fbad056e61e443a19dbd05ff670199d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AgentFlock: {fileID: 0}
-  Direction: {x: 0, y: 0}
-  AgentCollider: {fileID: 2464453100352452875}
 --- !u!50 &4757951865274085518
 Rigidbody2D:
   serializedVersion: 4
@@ -579,7 +563,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8543916317417872559}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &2430239601499677523
 CircleCollider2D:
@@ -626,7 +610,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8543916317417872559}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &7473249917270519626
 BoxCollider2D:
@@ -923,7 +907,7 @@ GameObject:
   - component: {fileID: 3103666850172814143}
   - component: {fileID: 2464453100352452875}
   m_Layer: 6
-  m_Name: Flocking Collider
+  m_Name: Flock Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -941,7 +925,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8543916317417872559}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &2464453100352452875
 CircleCollider2D:

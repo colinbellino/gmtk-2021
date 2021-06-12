@@ -37,7 +37,7 @@ namespace Game.Core.StateMachines.Game
 
 			_machine.Configure(States.Gameplay)
 				.Permit(Triggers.Won, States.Credits)
-				.PermitReentry(Triggers.Lost)
+				.Permit(Triggers.Lost, States.GameOver)
 				.PermitReentry(Triggers.NextLevel);
 
 			_machine.Configure(States.Credits)
@@ -68,7 +68,7 @@ namespace Game.Core.StateMachines.Game
 			}
 			else
 			{
-				Debug.LogWarning("Invalid transition " + _currentState + " -> " + trigger);
+				Debug.LogWarning("Invalid transition " + _currentState.GetType().Name + " -> " + trigger);
 			}
 		}
 

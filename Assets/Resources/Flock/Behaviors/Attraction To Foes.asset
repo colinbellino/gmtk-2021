@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7f71ba3e29524ed99082c322705347b, type: 3}
-  m_Name: Stay In 15m Radius
+  m_Script: {fileID: 11500000, guid: 6a4349c76711f4761a4bf857b2e0416a, type: 3}
+  m_Name: Attraction To Foes
   m_EditorClassIdentifier: 
-  center: {x: 0, y: 0}
-  radius: 15
+  filter: {fileID: 11400000, guid: 04455e6c67d474ac8af08b17455b98be, type: 2}
