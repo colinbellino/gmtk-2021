@@ -19,10 +19,11 @@ namespace Game.Core
 			{
 				var entity = entities[entityIndex];
 
-				if (entity.IsPlayerControlled)
+				if (entity.PlayerControlled)
 				{
 					entity.Component.SpriteRenderer.sortingOrder = 1;
 				}
+
 				entity.Component.Rigidbody.velocity = entity.Velocity;
 				entity.Position = (Vector2)entity.Component.transform.position;
 			}

@@ -21,17 +21,22 @@ namespace Game.Core.StateMachines.Game
 			_state.Entities = new List<Entity>();
 			var leader = new Entity
 			{
+				Name = "Leader",
 				Position = new float2(5, 5),
-				IsPlayerControlled = true,
+				PlayerControlled = true,
+				Color = Color.red,
+				RecruitmentRadius = 3f,
 			};
 			_state.Entities.Add(leader);
 
-			for (int i = 0; i < 100; i++)
+			for (int i = 0; i < 10; i++)
 			{
 				var entity = new Entity
 				{
+					Name = "Follower " + i,
 					Position = UnityEngine.Random.insideUnitCircle * 100 * 0.08f,
-					IsFollowingLeader = true,
+					Color = Color.green,
+					WillFollowerLeader = true,
 				};
 				_state.Entities.Add(entity);
 			}
@@ -41,7 +46,7 @@ namespace Game.Core.StateMachines.Game
 				Utils.SpawnEntity(entity, _config.EntityPrefab.GetComponent<EntityComponent>());
 			}
 
-			_flock.FollowTarget = leader.Component.transform;
+			_followersFlock.FollowTarget = leader.Component.transform;
 		}
 
 		public override void Tick()
@@ -49,14 +54,34 @@ namespace Game.Core.StateMachines.Game
 			base.Tick();
 
 			var moveInput = _controls.Gameplay.Move.ReadValue<Vector2>();
-			var leader = _state.Entities.First(e => e.IsPlayerControlled);
-			var followers = _state.Entities.Where(e => e.IsFollowingLeader).ToList();
+			var leader = _state.Entities.First(e => e.PlayerControlled);
+			var followers = _state.Entities.Where(e => e.Flock == _followersFlock).ToList();
 
-			leader.Velocity = (float2)moveInput * Time.deltaTime * leader.MoveSpeed;
-			leader.Component.SpriteRenderer.material = GameObject.Instantiate(leader.Component.SpriteRenderer.material);
-			leader.Component.SpriteRenderer.material.SetColor("ReplacementColor2", Color.blue);
+			{
+				var entity = leader;
 
-			_flock.Tick(followers);
+				entity.Velocity = (float2)moveInput * Time.deltaTime * entity.MoveSpeed;
+
+				var colliders = Physics2D.OverlapCircleAll(entity.Position, entity.RecruitmentRadius, LayerMask.GetMask("Entity"));
+				foreach (var collider in colliders)
+				{
+					if (collider == entity.Component.Collider)
+					{
+						continue;
+					}
+
+					var otherComponent = collider.GetComponent<EntityComponent>();
+					var otherEntity = otherComponent.Entity;
+
+					if (otherEntity.WillFollowerLeader && otherEntity.Flock == null)
+					{
+						otherEntity.Flock = _followersFlock;
+					}
+				}
+			}
+
+			_followersFlock.Tick(followers);
+
 			Rendering.UpdateEntities(_state.Entities);
 
 			if (Keyboard.current.f1Key.wasPressedThisFrame)

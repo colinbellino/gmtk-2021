@@ -56,7 +56,7 @@ public class Flock : MonoBehaviour
 	List<Transform> GetNearbyObjects(FlockAgent agent)
 	{
 		List<Transform> context = new List<Transform>();
-		Collider2D[] contextColliders = Physics2D.OverlapCircleAll(agent.transform.position, neighborRadius);
+		Collider2D[] contextColliders = Physics2D.OverlapCircleAll(agent.transform.position, neighborRadius, LayerMask.GetMask("Entity", "Obstacle"));
 		foreach (Collider2D c in contextColliders)
 		{
 			if (c != agent.AgentCollider)

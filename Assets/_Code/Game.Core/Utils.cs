@@ -50,6 +50,11 @@ namespace Game.Core
 		public static void SpawnEntity(Entity entity, EntityComponent entityPrefab)
 		{
 			var component = GameObject.Instantiate(entityPrefab, GridToWorldPosition(entity.Position), Quaternion.identity);
+			component.SpriteRenderer.material = GameObject.Instantiate(component.SpriteRenderer.material);
+			component.SpriteRenderer.material.SetColor("ReplacementColor2", entity.Color);
+			component.name = entity.Name;
+			component.Entity = entity;
+			component.RecruitmentRadiusRenderer.transform.localScale = new Vector2(entity.RecruitmentRadius, entity.RecruitmentRadius);
 			entity.Component = component;
 		}
 
