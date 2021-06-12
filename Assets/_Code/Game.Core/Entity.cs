@@ -13,10 +13,20 @@ namespace Game.Core
 		public Flock Flock;
 		public float MoveSpeed = 500f;
 		public float RecruitmentRadius;
+		public float HitRadius = 1f;
 		public bool PlayerControlled;
 		public bool WillFollowerLeader;
 		public bool Static;
+		public bool CanBeHit;
+		public Alliances Alliance;
+		public int HealthCurrent = 1;
+		public int HealthMax = 1;
+		public bool Destroyed;
+		public float AttackTimestamp;
+		public float AttackCooldown = 0.5f;
 
 		public EntityComponent Component;
 	}
+
+	public enum Alliances { None, Ally, Foe }
 }

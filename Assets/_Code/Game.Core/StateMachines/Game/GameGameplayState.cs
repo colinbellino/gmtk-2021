@@ -27,6 +27,8 @@ namespace Game.Core.StateMachines.Game
 				Color = _config.LeaderColor,
 				RecruitmentRadius = 2f,
 				Sprite = _config.LeaderSprite,
+				CanBeHit = true,
+				Alliance = Alliances.Ally,
 			};
 			_state.Entities.Add(leader);
 
@@ -39,6 +41,7 @@ namespace Game.Core.StateMachines.Game
 					Color = _config.LeaderColor,
 					WillFollowerLeader = true,
 					Sprite = _config.FollowerSprite,
+					Alliance = Alliances.Ally,
 				};
 				_state.Entities.Add(entity);
 			}
@@ -53,6 +56,9 @@ namespace Game.Core.StateMachines.Game
 					Position = (Vector2)spawner.transform.position,
 					Sprite = _config.CrateSprite,
 					Static = true,
+					CanBeHit = true,
+					HealthCurrent = 10,
+					HealthMax = 10,
 				};
 				_state.Entities.Add(entity);
 			}
@@ -80,21 +86,49 @@ namespace Game.Core.StateMachines.Game
 
 				entity.Velocity = (float2)moveInput * Time.deltaTime * entity.MoveSpeed;
 
-				var colliders = Physics2D.OverlapCircleAll(entity.Position, entity.RecruitmentRadius, LayerMask.GetMask("Entity"));
-				foreach (var collider in colliders)
+				if (_controls.Gameplay.Confirm.WasPerformedThisFrame() && Time.time > entity.AttackTimestamp)
 				{
-					if (collider == entity.Component.Collider)
+					entity.AttackTimestamp = Time.time + entity.AttackCooldown;
+					entity.Component.Animator.Play("Attack");
+
+					var colliders = Physics2D.OverlapCircleAll(entity.Position, entity.HitRadius, LayerMask.GetMask("Entity"));
+					foreach (var collider in colliders)
 					{
-						continue;
+						if (collider == entity.Component.Collider)
+						{
+							continue;
+						}
+
+						var otherComponent = collider.GetComponentInParent<EntityComponent>();
+						var otherEntity = otherComponent.Entity;
+
+						if (otherEntity.CanBeHit && otherEntity.Alliance != Alliances.Ally)
+						{
+							UnityEngine.Debug.Log("Hit => " + otherEntity.Name);
+							var damage = 1;
+							otherEntity.HealthCurrent = math.max(0, otherEntity.HealthCurrent - damage);
+						}
 					}
+				}
 
-					var otherComponent = collider.GetComponentInParent<EntityComponent>();
-					var otherEntity = otherComponent.Entity;
-
-					if (otherEntity.WillFollowerLeader && otherEntity.Flock == null)
+				{
+					var colliders = Physics2D.OverlapCircleAll(entity.Position, entity.RecruitmentRadius, LayerMask.GetMask("Entity"));
+					foreach (var collider in colliders)
 					{
-						otherEntity.Flock = _followersFlock;
-						otherEntity.Component.Collider.gameObject.SetActive(false);
+						if (collider == entity.Component.Collider)
+						{
+							continue;
+						}
+
+						var otherComponent = collider.GetComponentInParent<EntityComponent>();
+						var otherEntity = otherComponent.Entity;
+
+						if (otherEntity.WillFollowerLeader && otherEntity.Flock == null)
+						{
+							otherEntity.Flock = _followersFlock;
+							otherEntity.CanBeHit = true;
+							otherEntity.Component.Collider.gameObject.SetActive(false);
+						}
 					}
 				}
 			}

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,7 +23,24 @@ namespace Game.Core
 					entity.Component.SpriteRenderer.sortingOrder = 1;
 				}
 
-				entity.Component.Rigidbody.velocity = entity.Velocity;
+				if (entity.Static == false)
+				{
+					entity.Component.Rigidbody.velocity = entity.Velocity;
+				}
+
+				if (entity.HealthCurrent == 0)
+				{
+					entity.Destroyed = true;
+				}
+
+				if (entity.Destroyed)
+				{
+					entity.Component.gameObject.SetActive(false);
+				}
+
+				entity.Component.UI.gameObject.SetActive(entity.HealthCurrent != entity.HealthMax && entity.HealthCurrent > 0);
+				entity.Component.HealthSlider.value = (float)entity.HealthCurrent / entity.HealthMax;
+
 				entity.Position = (Vector2)entity.Component.transform.position;
 			}
 		}
