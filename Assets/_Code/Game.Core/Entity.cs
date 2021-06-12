@@ -14,7 +14,7 @@ namespace Game.Core
 		public Flock Flock;
 		public float MoveSpeed = 500f;
 		public float RecruitmentRadius;
-		public float HitRadius = 1f;
+		public float AttackRadius = 2f;
 		public bool PlayerControlled;
 		public bool WillFollowerLeader;
 		public bool Static;

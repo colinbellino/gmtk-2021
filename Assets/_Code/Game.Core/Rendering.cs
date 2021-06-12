@@ -47,6 +47,7 @@ namespace Game.Core
 			component.SpriteRenderer.material.SetColor("ReplacementColor2", entity.Color);
 
 			component.RecruitmentRadiusRenderer.transform.localScale = new Vector2(entity.RecruitmentRadius * 2, entity.RecruitmentRadius * 2);
+			component.AttackRadiusRenderer.transform.localScale = new Vector2(entity.AttackRadius * 2, entity.AttackRadius * 2);
 
 			component.Collider = entity.ColliderType switch
 			{

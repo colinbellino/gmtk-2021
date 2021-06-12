@@ -12,6 +12,7 @@ namespace Game.Core
 		public Collider2D CircleCollider;
 		public FlockAgent FlockAgent;
 		public SpriteRenderer RecruitmentRadiusRenderer;
+		public SpriteRenderer AttackRadiusRenderer;
 		public Canvas UI;
 		public Slider HealthSlider;
 

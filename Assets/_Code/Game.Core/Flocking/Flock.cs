@@ -5,23 +5,14 @@ using UnityEngine;
 
 public class Flock : MonoBehaviour
 {
-	public FlockAgent agentPrefab;
-	// List<FlockAgent> agents = new List<FlockAgent>();
 	public FlockBehavior behavior;
-	public Transform FollowTarget;
+	[HideInInspector] public Transform FollowTarget;
 
-	[Range(10, 500)]
-	public int startingCount = 250;
-	// const float AgentDensity = 0.08f;
-
-	[Range(1f, 100f)]
-	public float driveFactor = 10f;
-	[Range(1f, 100f)]
-	public float maxSpeed = 5f;
-	[Range(1f, 10f)]
-	public float neighborRadius = 1.5f;
-	[Range(0f, 1f)]
-	public float avoidanceRadiusMultiplier = 0.5f;
+	[Range(10, 500)] public int startingCount = 250;
+	[Range(1f, 100f)] public float driveFactor = 10f;
+	[Range(1f, 100f)] public float maxSpeed = 5f;
+	[Range(1f, 10f)] public float neighborRadius = 1.5f;
+	[Range(0f, 1f)] public float avoidanceRadiusMultiplier = 0.5f;
 
 	float squareMaxSpeed;
 	float squareNeighborRadius;
@@ -42,6 +33,11 @@ public class Flock : MonoBehaviour
 		foreach (var entity in entities)
 		{
 			List<Transform> context = GetNearbyObjects(entity.Component.FlockAgent);
+
+			if (Time.time < entity.AttackTimestamp)
+			{
+				continue;
+			}
 
 			Vector2 move = behavior.CalculateMove(entity.Component.FlockAgent, context, this);
 			move *= driveFactor;

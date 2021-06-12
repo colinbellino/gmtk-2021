@@ -64,8 +64,8 @@ namespace Game.Core.StateMachines.Game
 					Sprite = _config.CrateSprite,
 					Static = true,
 					CanBeHit = true,
-					HealthCurrent = 5,
-					HealthMax = 5,
+					HealthCurrent = 4,
+					HealthMax = 4,
 					SortingOrder = 1,
 				};
 				_state.Entities.Add(entity);
@@ -96,37 +96,55 @@ namespace Game.Core.StateMachines.Game
 
 				entity.Velocity = (float2)moveInput * Time.deltaTime * 1000f;
 
-				if (_controls.Gameplay.Confirm.WasPerformedThisFrame() && Time.time > entity.AttackTimestamp)
+				if (_controls.Gameplay.Confirm.WasPerformedThisFrame())
 				{
-					entity.AttackTimestamp = Time.time + entity.AttackCooldown;
-					entity.Component.Animator.Play("Attack");
+					var attackers = new List<Entity>(followers);
+					attackers.Add(leader);
 
-					var colliders = Physics2D.OverlapCircleAll(entity.Position, entity.HitRadius, LayerMask.GetMask("Entity"));
-					foreach (var collider in colliders)
+					foreach (var attacker in attackers)
 					{
-						if (collider == entity.Component.Collider)
+						if (Time.time <= entity.AttackTimestamp)
 						{
 							continue;
 						}
 
-						var otherComponent = collider.GetComponentInParent<EntityComponent>();
-						var otherEntity = otherComponent.Entity;
-
-						if (otherEntity.CanBeHit && otherEntity.Alliance != Alliances.Ally)
+						var colliders = Physics2D.OverlapCircleAll(attacker.Position, attacker.AttackRadius, LayerMask.GetMask("Entity"));
+						var targetsCount = 0;
+						foreach (var collider in colliders)
 						{
-							UnityEngine.Debug.Log("Hit => " + otherEntity.Name);
-							var damage = 1;
-							otherEntity.HealthCurrent = math.max(0, otherEntity.HealthCurrent - damage);
-
-
-							if (otherEntity.HealthCurrent == 0)
+							if (collider == attacker.Component.Collider)
 							{
-								otherEntity.Component.Animator.Play("Destroy");
-								otherEntity.FlaggedForDestroy = true;
-								otherEntity.DestroyTimestamp = Time.time + 0.5f;
+								continue;
+							}
+
+							var otherComponent = collider.GetComponentInParent<EntityComponent>();
+							var otherEntity = otherComponent.Entity;
+
+							if (otherEntity.CanBeHit && otherEntity.Alliance != Alliances.Ally)
+							{
+								UnityEngine.Debug.Log(attacker.Name + " => " + otherEntity.Name);
+								var damage = 1;
+								otherEntity.HealthCurrent = math.max(0, otherEntity.HealthCurrent - damage);
+
+								if (otherEntity.HealthCurrent == 0)
+								{
+									otherEntity.Component.Animator.Play("Destroy");
+									otherEntity.FlaggedForDestroy = true;
+									otherEntity.DestroyTimestamp = Time.time + 0.5f;
+									otherEntity.CanBeHit = false;
+								}
+
+								targetsCount += 1;
 							}
 						}
+
+						if (/* entity == leader ||  */targetsCount > 0)
+						{
+							attacker.AttackTimestamp = Time.time + attacker.AttackCooldown;
+							attacker.Component.Animator.Play("Attack");
+						}
 					}
+
 				}
 
 				{
