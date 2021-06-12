@@ -191,7 +191,10 @@ namespace Game.Core.StateMachines.Game
 					}
 
 					// Movement
-					entity.Velocity = (float2)moveInput * entity.MoveSpeed;
+					if (Time.time > entity.AttackTimestamp)
+					{
+						entity.Velocity = (float2)moveInput * entity.MoveSpeed;
+					}
 
 					// Camera
 					_cameraRig.transform.position = entity.Component.transform.position;
@@ -280,13 +283,12 @@ namespace Game.Core.StateMachines.Game
 
 		private void Shoot(Entity entity)
 		{
-			if (Time.time <= entity.AttackTimestamp)
+			if (entity.FlaggedForDestroy || Time.time <= entity.AttackTimestamp)
 			{
 				return;
 			}
 
 			var colliders = Physics2D.OverlapCircleAll(entity.Position, entity.AttackRadius, LayerMask.GetMask("Entity"));
-			var targetsCount = 0;
 			foreach (var collider in colliders)
 			{
 				if (collider == entity.Component.Collider)
@@ -297,43 +299,53 @@ namespace Game.Core.StateMachines.Game
 				var otherComponent = collider.GetComponentInParent<EntityComponent>();
 				var otherEntity = otherComponent.Entity;
 
-				// TODO: Check if has line of sight
+				var difference = otherEntity.Position - entity.Position;
+				var direction = math.normalizesafe(difference);
+
 				if (otherEntity.CanBeHit && otherEntity.Alliance != entity.Alliance && otherEntity.Alliance != Alliances.None)
 				{
-					UnityEngine.Debug.Log(entity.Name + " SHOOT => " + otherEntity.Name);
-
-					var direction = math.normalizesafe(otherEntity.Position - entity.Position);
-
-					var projectile = new Entity
+					var hasLineOfSight = true;
+					var hits = Physics2D.RaycastAll(entity.Position, direction, ((Vector2)difference).magnitude, LayerMask.GetMask("Entity", "Obstacle"));
+					foreach (var hit in hits)
 					{
-						Name = "Projectile",
-						Position = entity.Position + direction * 0.5f,
-						Color = entity.Color,
-						RigidbodyType = RigidbodyType2D.Kinematic,
-						ColliderScale = 0.1f,
-						Sprite = _config.ProjectileSprite,
-						Alliance = entity.Alliance,
-						ColliderType = 1,
-						SortingOrder = 1,
-						AttackRadius = 0.1f,
-						AttackOnCollision = true,
-						Direction = direction,
-						MoveSpeed = 10f,
-					};
-					projectile.Velocity = direction * projectile.MoveSpeed;
-					Rendering.SpawnEntity(projectile, _config.EntityPrefab.GetComponent<EntityComponent>());
-					_state.Entities.Add(projectile);
+						if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
+						{
+							// UnityEngine.Debug.Log("bla : " + hit.collider.transform.parent.name + " / other: " + otherEntity.Name);
+							hasLineOfSight = false;
+							break;
+						}
+					}
 
-					targetsCount += 1;
+					if (hasLineOfSight)
+					{
+						UnityEngine.Debug.Log(entity.Name + " SHOOT => " + otherEntity.Name);
 
-					break;
+						var projectile = new Entity
+						{
+							Name = "Projectile",
+							Position = entity.Position + direction * 0.5f,
+							Color = entity.Color,
+							RigidbodyType = RigidbodyType2D.Kinematic,
+							ColliderScale = 0.1f,
+							Sprite = _config.ProjectileSprite,
+							Alliance = entity.Alliance,
+							ColliderType = 1,
+							SortingOrder = 1,
+							AttackRadius = 0.1f,
+							AttackOnCollision = true,
+							Direction = direction,
+							MoveSpeed = 10f,
+						};
+						projectile.Velocity = direction * projectile.MoveSpeed;
+						Rendering.SpawnEntity(projectile, _config.EntityPrefab.GetComponent<EntityComponent>());
+						_state.Entities.Add(projectile);
+
+						entity.AttackTimestamp = Time.time + entity.AttackCooldown;
+						entity.Component.Animator.Play("Attack");
+
+						return;
+					}
 				}
-			}
-
-			if (targetsCount > 0)
-			{
-				entity.AttackTimestamp = Time.time + entity.AttackCooldown;
-				entity.Component.Animator.Play("Attack");
 			}
 		}
 
