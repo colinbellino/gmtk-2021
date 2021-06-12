@@ -121,8 +121,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8543916317417872559}
   - component: {fileID: 9005532530728875798}
-  - component: {fileID: 5676550410141121996}
   - component: {fileID: 5574795689234227543}
+  - component: {fileID: 5275935017261798555}
+  - component: {fileID: 4757951865274085518}
   m_Layer: 0
   m_Name: Entity
   m_TagString: Untagged
@@ -159,9 +160,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpriteRenderer: {fileID: 835740370884636407}
-  Rigidbody: {fileID: 5676550410141121996}
+  Rigidbody: {fileID: 4757951865274085518}
   Collider: {fileID: 5574795689234227543}
---- !u!50 &5676550410141121996
+  FlockAgent: {fileID: 5275935017261798555}
+--- !u!58 &5574795689234227543
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2177991408146733114}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.2
+--- !u!114 &5275935017261798555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2177991408146733114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fbad056e61e443a19dbd05ff670199d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AgentFlock: {fileID: 0}
+  Direction: {x: 0, y: 0}
+--- !u!50 &4757951865274085518
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -182,22 +214,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &5574795689234227543
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2177991408146733114}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.2
 --- !u!1 &2853751900917913600
 GameObject:
   m_ObjectHideFlags: 0
@@ -399,7 +415,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5697144770060964675
 RectTransform:
   m_ObjectHideFlags: 0

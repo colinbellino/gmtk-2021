@@ -34,14 +34,7 @@ MonoBehaviour:
     - io.tinu.asepriteimporter
     m_IsDefault: 0
     m_Capabilities: 0
-  - m_Id: scoped:A* Pathfinding Project
-    m_Name: A* Pathfinding Project
-    m_Url: https://arongranberg.com/packages/ec4a41572bc93b1fde812e38a93edcb360c3e66b5d537
-    m_Scopes:
-    - com.arongranberg.astar
-    m_IsDefault: 0
-    m_Capabilities: 0
-  m_UserSelectedRegistryName: 
+  m_UserSelectedRegistryName: package.openupm.com
   m_UserAddingNewScopedRegistry: 0
   m_RegistryInfoDraft:
     m_ErrorMessage: 

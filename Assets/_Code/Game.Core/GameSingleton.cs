@@ -12,5 +12,6 @@ namespace Game.Core
 		public GameState State;
 		public AudioPlayer AudioPlayer;
 		public GameFSM GameFSM;
+		public Flock Flock;
 	}
 }

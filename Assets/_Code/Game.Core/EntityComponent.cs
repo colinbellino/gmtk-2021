@@ -7,5 +7,6 @@ namespace Game.Core
 		public SpriteRenderer SpriteRenderer;
 		public Rigidbody2D Rigidbody;
 		public Collider2D Collider;
+		public FlockAgent FlockAgent;
 	}
 }

@@ -16,12 +16,14 @@ namespace Game.Core
 			var camera = Camera.main;
 			var ui = FindObjectOfType<GameUI>();
 			var cameraRig = FindObjectOfType<CameraRig>();
+			var flock = FindObjectOfType<Flock>();
 
 			Assert.IsNotNull(config);
 			Assert.IsNotNull(musicAudioSource);
 			Assert.IsNotNull(camera);
 			Assert.IsNotNull(ui);
 			Assert.IsNotNull(cameraRig);
+			Assert.IsNotNull(flock);
 
 			Game = new GameSingleton();
 			Game.Config = config;
@@ -31,6 +33,7 @@ namespace Game.Core
 			Game.State = new GameState();
 			Game.AudioPlayer = new AudioPlayer(config, musicAudioSource);
 			Game.GameFSM = new GameFSM(config.DebugFSM, Game);
+			Game.Flock = flock;
 
 			Game.UI.Inject(Game);
 			Game.GameFSM.Start();

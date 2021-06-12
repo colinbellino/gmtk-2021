@@ -19,14 +19,18 @@ namespace Game.Core.StateMachines.Game
 			_controls.Gameplay.Enable();
 
 			_state.Entities = new List<Entity>();
-			var leader = new Entity { Position = new float2(5, -3), IsPlayerControlled = true };
+			var leader = new Entity
+			{
+				Position = new float2(5, 5),
+				IsPlayerControlled = true,
+			};
 			_state.Entities.Add(leader);
 
-			for (int i = 0; i < 10; i++)
+			for (int i = 0; i < 100; i++)
 			{
 				var entity = new Entity
 				{
-					Position = new float2(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f)),
+					Position = UnityEngine.Random.insideUnitCircle * 100 * 0.08f,
 					IsFollowingLeader = true,
 				};
 				_state.Entities.Add(entity);
@@ -36,6 +40,8 @@ namespace Game.Core.StateMachines.Game
 			{
 				Utils.SpawnEntity(entity, _config.EntityPrefab.GetComponent<EntityComponent>());
 			}
+
+			_flock.FollowTarget = leader.Component.transform;
 		}
 
 		public override void Tick()
@@ -46,10 +52,11 @@ namespace Game.Core.StateMachines.Game
 			var leader = _state.Entities.First(e => e.IsPlayerControlled);
 			var followers = _state.Entities.Where(e => e.IsFollowingLeader).ToList();
 
-			leader.Component.SpriteRenderer.color = Color.red;
 			leader.Velocity = (float2)moveInput * Time.deltaTime * leader.MoveSpeed;
+			leader.Component.SpriteRenderer.material = GameObject.Instantiate(leader.Component.SpriteRenderer.material);
+			leader.Component.SpriteRenderer.material.SetColor("ReplacementColor2", Color.blue);
 
-			Flock.UpdateVelocity(followers, leader);
+			_flock.Tick(followers);
 			Rendering.UpdateEntities(_state.Entities);
 
 			if (Keyboard.current.f1Key.wasPressedThisFrame)

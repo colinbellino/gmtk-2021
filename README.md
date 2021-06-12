@@ -6,7 +6,7 @@ This game is my submission for the GMTK Jam 2021 (https://itch.io/jam/gmtk-2021)
 
 - **Art:** TODO
 - **Audio:** TODO
-- **Paid assets:** <span style="color: red;">Yes</span>
+- **Paid assets:** TODO
 
 <!--
 ## Controls:
