@@ -22,7 +22,7 @@ namespace Game.Core.StateMachines.Game
 
 			if (IsDevBuild())
 			{
-				_ui.ShowDebug();
+				// _ui.ShowDebug();
 
 				if (_config.LockFPS > 0)
 				{

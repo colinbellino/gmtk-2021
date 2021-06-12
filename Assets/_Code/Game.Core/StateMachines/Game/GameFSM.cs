@@ -7,7 +7,7 @@ namespace Game.Core.StateMachines.Game
 {
 	public class GameFSM
 	{
-		public enum States { Init, Gameplay, Credits, GameOver, Quit }
+		public enum States { Init, Gameplay, Score, Credits, GameOver, Quit }
 		public enum Triggers { Done, Won, Lost, Retry, NextLevel, Quit }
 
 		private readonly bool _debug;
@@ -24,6 +24,7 @@ namespace Game.Core.StateMachines.Game
 			{
 				{ States.Init, new GameInitState(this, game) },
 				{ States.Gameplay, new GameGameplayState(this, game) },
+				{ States.Score, new GameScoreState(this, game) },
 				{ States.Credits, new GameCreditsState(this, game) },
 				{ States.GameOver, new GameOverState(this, game) },
 				{ States.Quit, new GameQuitState(this, game) },
@@ -33,20 +34,29 @@ namespace Game.Core.StateMachines.Game
 			_machine.OnTransitioned(OnTransitioned);
 
 			_machine.Configure(States.Init)
-				.Permit(Triggers.Done, States.Gameplay);
+				.Permit(Triggers.Done, States.Gameplay)
+			;
 
 			_machine.Configure(States.Gameplay)
+				.Permit(Triggers.NextLevel, States.Score)
 				.Permit(Triggers.Won, States.Credits)
 				.Permit(Triggers.Lost, States.GameOver)
-				.PermitReentry(Triggers.NextLevel);
+			;
+
+			_machine.Configure(States.Score)
+				.Permit(Triggers.NextLevel, States.Gameplay)
+				.Permit(Triggers.Retry, States.Gameplay)
+			;
 
 			_machine.Configure(States.Credits)
 				.Permit(Triggers.Retry, States.Gameplay)
-				.Permit(Triggers.Quit, States.Quit);
+				.Permit(Triggers.Quit, States.Quit)
+			;
 
 			_machine.Configure(States.GameOver)
 				.Permit(Triggers.Retry, States.Gameplay)
-				.Permit(Triggers.Quit, States.Quit);
+				.Permit(Triggers.Quit, States.Quit)
+			;
 
 			_currentState = _states[_machine.State];
 		}

@@ -10,8 +10,8 @@ namespace Game.Core.StateMachines.Game
 	public class GameGameplayState : BaseGameState
 	{
 		private Transform _levelsContainer;
-		private int _currentLevelIndex;
 		private bool _isTransitioning;
+		private float _levelTimer;
 
 		public GameGameplayState(GameFSM fsm, GameSingleton game) : base(fsm, game) { }
 
@@ -22,17 +22,24 @@ namespace Game.Core.StateMachines.Game
 			_ = _ui.FadeOut();
 
 			_isTransitioning = false;
-
-			_ui.ShowDebug();
-			_controls.Gameplay.Enable();
-
-			_levelsContainer = GameObject.Find("Levels").transform;
+			if (_levelsContainer == null)
+			{
+				_levelsContainer = GameObject.Find("Levels").transform;
+			}
 			for (int levelIndex = 0; levelIndex < _levelsContainer.childCount; levelIndex++)
 			{
 				var level = _levelsContainer.GetChild(levelIndex);
-				UnityEngine.Debug.Log(level);
-				level.gameObject.SetActive(levelIndex == _currentLevelIndex);
+				// UnityEngine.Debug.Log(level);
+				level.gameObject.SetActive(levelIndex == _state.CurrentLevelIndex);
 			}
+
+			if (_state.Scores == null)
+			{
+				_state.Scores = new Score[_levelsContainer.childCount];
+			}
+
+			// _ui.ShowDebug();
+			_controls.Gameplay.Enable();
 
 			_state.Entities = new List<Entity>();
 
@@ -137,6 +144,8 @@ namespace Game.Core.StateMachines.Game
 		public override void Tick()
 		{
 			base.Tick();
+
+			_levelTimer += Time.deltaTime;
 
 			var moveInput = _controls.Gameplay.Move.ReadValue<Vector2>();
 
@@ -391,7 +400,7 @@ namespace Game.Core.StateMachines.Game
 				GameObject.Destroy(entity.Component.gameObject);
 			}
 			_state.Entities.Clear();
-			_levelsContainer.GetChild(_currentLevelIndex).gameObject.SetActive(false);
+			_levelsContainer.GetChild(_state.CurrentLevelIndex).gameObject.SetActive(false);
 		}
 
 		private void NextLevel()
@@ -400,14 +409,21 @@ namespace Game.Core.StateMachines.Game
 			{
 				return;
 			}
+
 			_isTransitioning = true;
-			if (_currentLevelIndex == _levelsContainer.childCount - 1)
+
+			if (_state.CurrentLevelIndex == _levelsContainer.childCount - 1)
 			{
-				UnityEngine.Debug.Log("Won");
 				_fsm.Fire(GameFSM.Triggers.Won);
 				return;
 			}
-			_currentLevelIndex += 1;
+
+			_state.Scores[_state.CurrentLevelIndex] = new Score
+			{
+				Timer = _levelTimer,
+				// TODO: Check the range of followers
+				Followers = _state.Entities.Where(e => e.Flock == _followersFlock && e.HealthCurrent > 0).Count(),
+			};
 			_fsm.Fire(GameFSM.Triggers.NextLevel);
 		}
 

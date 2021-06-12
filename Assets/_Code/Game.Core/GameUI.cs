@@ -21,11 +21,16 @@ namespace Game.Core
 		[SerializeField] public Button PauseButton2;
 		[SerializeField] public Button PauseButton3;
 		[SerializeField] public Button PauseButton4;
-		[Header("Victory")]
+		[Header("Score")]
 		[SerializeField] private Image _victoryPanel;
 		[SerializeField] private TMP_Text _victoryText;
 		[SerializeField] public Button VictoryButton1;
 		[SerializeField] public Button VictoryButton2;
+		[Header("Credits")]
+		[SerializeField] private Image _creditsPanel;
+		[SerializeField] private TMP_Text _creditsText;
+		[SerializeField] public Button CreditsButton1;
+		[SerializeField] public Button CreditsButton2;
 		[Header("Defeat")]
 		[SerializeField] private Image _defeatPanel;
 		[SerializeField] private TMP_Text _defeatText;
@@ -50,11 +55,14 @@ namespace Game.Core
 			HidePause();
 			_ = HideVictory(0f);
 			_ = HideDefeat(0f);
+			_ = HideCredits(0f);
 
 			VictoryButton1.onClick.AddListener(PlayButtonClip);
 			VictoryButton2.onClick.AddListener(PlayButtonClip);
 			DefeatButton1.onClick.AddListener(PlayButtonClip);
 			DefeatButton2.onClick.AddListener(PlayButtonClip);
+			CreditsButton1.onClick.AddListener(PlayButtonClip);
+			CreditsButton2.onClick.AddListener(PlayButtonClip);
 			PauseButton1.onClick.AddListener(PlayButtonClip);
 			PauseButton2.onClick.AddListener(PlayButtonClip);
 			PauseButton3.onClick.AddListener(PlayButtonClip);
@@ -90,8 +98,9 @@ namespace Game.Core
 		}
 		public void HidePause() { _pauseRoot.SetActive(false); }
 
-		public async UniTask ShowVictory()
+		public async UniTask ShowVictory(string text)
 		{
+			_victoryText.text = text;
 			await FadeInPanel(_victoryPanel, _victoryText, 0.5f);
 
 			EventSystem.current.SetSelectedGameObject(null);
@@ -114,6 +123,20 @@ namespace Game.Core
 		public async UniTask HideDefeat(float duration = 0.5f)
 		{
 			await FadeOutPanel(_defeatPanel, duration);
+		}
+
+		public async UniTask ShowCredits()
+		{
+			// _creditsText.text = text;
+			await FadeInPanel(_creditsPanel, _creditsText, 0.5f);
+
+			EventSystem.current.SetSelectedGameObject(null);
+			await UniTask.NextFrame();
+			EventSystem.current.SetSelectedGameObject(CreditsButton1.gameObject);
+		}
+		public async UniTask HideCredits(float duration = 0.5f)
+		{
+			await FadeOutPanel(_creditsPanel, duration);
 		}
 
 		public async UniTask FadeIn(Color color, float duration = 1f)

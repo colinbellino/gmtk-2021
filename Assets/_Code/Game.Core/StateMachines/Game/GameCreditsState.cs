@@ -1,4 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 
 namespace Game.Core.StateMachines.Game
 {
@@ -10,27 +10,26 @@ namespace Game.Core.StateMachines.Game
 		{
 			await base.Enter();
 
-			_ui.SetDebugText("State: Victory");
-			await _ui.ShowVictory();
+			await _ui.ShowCredits();
 
-			_ui.VictoryButton1.onClick.AddListener(Restart);
-			_ui.VictoryButton2.onClick.AddListener(Quit);
-
-			_ = _audioPlayer.StopMusic(5f);
+			_ui.CreditsButton1.onClick.AddListener(Restart);
+			_ui.CreditsButton2.onClick.AddListener(Quit);
 		}
 
 		public override async UniTask Exit()
 		{
 			await base.Exit();
 
-			await _ui.HideVictory();
+			_ui.CreditsButton1.onClick.RemoveListener(Restart);
+			_ui.CreditsButton2.onClick.RemoveListener(Quit);
 
-			_ui.VictoryButton1.onClick.RemoveListener(Restart);
-			_ui.VictoryButton2.onClick.RemoveListener(Quit);
+			await _ui.HideCredits();
 		}
 
 		private void Restart()
 		{
+			_state.CurrentLevelIndex = 0;
+
 			_fsm.Fire(GameFSM.Triggers.Retry);
 		}
 

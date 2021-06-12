@@ -11,5 +11,18 @@ namespace Game.Core
 		public float CurrentSoundVolume;
 
 		public List<Entity> Entities;
+		public Score[] Scores;
+		public int CurrentLevelIndex;
+	}
+
+	public class Score
+	{
+		public float Timer;
+		public int Followers;
+
+		public override string ToString()
+		{
+			return $"Score: {Followers} in {Timer} seconds";
+		}
 	}
 }
