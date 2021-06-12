@@ -1,4 +1,5 @@
-﻿using Unity.Mathematics;
+﻿using System.Collections.Generic;
+using Unity.Mathematics;
 
 namespace Game.Core
 {
@@ -8,5 +9,7 @@ namespace Game.Core
 		public float CurrentMusicVolume;
 		public float InitialSoundVolume;
 		public float CurrentSoundVolume;
+
+		public List<Entity> Entities;
 	}
 }

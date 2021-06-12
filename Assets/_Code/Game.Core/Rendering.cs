@@ -1,4 +1,5 @@
-using Unity.Mathematics;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Core
@@ -12,17 +13,15 @@ namespace Game.Core
 			material.SetColor("ReplacementColor3", skinColor);
 		}
 
-		private static float3 GridToWorldPosition(float2 position, float z = 0)
+		internal static void UpdateEntities(List<Entity> entities)
 		{
-			return GridToWorldPosition(position.x, position.y, z);
-		}
+			for (int entityIndex = 0; entityIndex < entities.Count; entityIndex++)
+			{
+				var entity = entities[entityIndex];
 
-		private static float3 GridToWorldPosition(float x, float y, float z = 0)
-		{
-			// Uncomment this to render using classic 3d axis order (x,z,y)
-			// return new float3(x, z, y);
-
-			return new float3(x, y, z);
+				entity.Component.Rigidbody.velocity = entity.Velocity;
+				entity.Position = (Vector2)entity.Component.transform.position;
+			}
 		}
 	}
 }
