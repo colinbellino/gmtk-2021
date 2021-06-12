@@ -29,27 +29,34 @@ namespace Game.Core.StateMachines.Game
 				Sprite = _config.LeaderSprite,
 				CanBeHit = true,
 				Alliance = Alliances.Ally,
+				ColliderType = 1,
+				SortingOrder = 1,
 			};
 			_state.Entities.Add(leader);
 
-			for (int i = 0; i < 20; i++)
+			var followerSpawners = GameObject.FindObjectsOfType<FollowerSpawner>();
+			for (int i = 0; i < followerSpawners.Length; i++)
 			{
+				var spawner = followerSpawners[i];
 				var entity = new Entity
 				{
 					Name = "Follower " + i,
-					Position = UnityEngine.Random.insideUnitCircle * 40 * 0.08f,
+					Position = (Vector2)spawner.transform.position,
 					Color = _config.LeaderColor,
 					WillFollowerLeader = true,
 					Sprite = _config.FollowerSprite,
 					Alliance = Alliances.Ally,
+					ColliderType = 1,
 				};
 				_state.Entities.Add(entity);
+
+				GameObject.Destroy(spawner.gameObject);
 			}
 
 			var crateSpawners = GameObject.FindObjectsOfType<CrateSpawner>();
 			for (int i = 0; i < crateSpawners.Length; i++)
 			{
-				CrateSpawner spawner = crateSpawners[i];
+				var spawner = crateSpawners[i];
 				var entity = new Entity
 				{
 					Name = "Crate " + i,
@@ -57,15 +64,18 @@ namespace Game.Core.StateMachines.Game
 					Sprite = _config.CrateSprite,
 					Static = true,
 					CanBeHit = true,
-					HealthCurrent = 10,
-					HealthMax = 10,
+					HealthCurrent = 5,
+					HealthMax = 5,
+					SortingOrder = 1,
 				};
 				_state.Entities.Add(entity);
+
+				GameObject.Destroy(spawner.gameObject);
 			}
 
 			foreach (var entity in _state.Entities)
 			{
-				Utils.SpawnEntity(entity, _config.EntityPrefab.GetComponent<EntityComponent>());
+				Rendering.SpawnEntity(entity, _config.EntityPrefab.GetComponent<EntityComponent>());
 			}
 
 			_followersFlock.FollowTarget = leader.Component.transform;
@@ -84,7 +94,7 @@ namespace Game.Core.StateMachines.Game
 			{
 				var entity = leader;
 
-				entity.Velocity = (float2)moveInput * Time.deltaTime * entity.MoveSpeed;
+				entity.Velocity = (float2)moveInput * Time.deltaTime * 1000f;
 
 				if (_controls.Gameplay.Confirm.WasPerformedThisFrame() && Time.time > entity.AttackTimestamp)
 				{
@@ -107,6 +117,14 @@ namespace Game.Core.StateMachines.Game
 							UnityEngine.Debug.Log("Hit => " + otherEntity.Name);
 							var damage = 1;
 							otherEntity.HealthCurrent = math.max(0, otherEntity.HealthCurrent - damage);
+
+
+							if (otherEntity.HealthCurrent == 0)
+							{
+								otherEntity.Component.Animator.Play("Destroy");
+								otherEntity.FlaggedForDestroy = true;
+								otherEntity.DestroyTimestamp = Time.time + 0.5f;
+							}
 						}
 					}
 				}

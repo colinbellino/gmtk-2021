@@ -12,28 +12,20 @@ namespace Game.Core
 			material.SetColor("ReplacementColor3", skinColor);
 		}
 
-		internal static void UpdateEntities(List<Entity> entities)
+		public static void UpdateEntities(List<Entity> entities)
 		{
 			for (int entityIndex = 0; entityIndex < entities.Count; entityIndex++)
 			{
 				var entity = entities[entityIndex];
 
-				if (entity.PlayerControlled)
-				{
-					entity.Component.SpriteRenderer.sortingOrder = 1;
-				}
+				entity.Component.SpriteRenderer.sortingOrder = entity.SortingOrder;
 
 				if (entity.Static == false)
 				{
 					entity.Component.Rigidbody.velocity = entity.Velocity;
 				}
 
-				if (entity.HealthCurrent == 0)
-				{
-					entity.Destroyed = true;
-				}
-
-				if (entity.Destroyed)
+				if (entity.FlaggedForDestroy && Time.time > entity.DestroyTimestamp)
 				{
 					entity.Component.gameObject.SetActive(false);
 				}
@@ -43,6 +35,35 @@ namespace Game.Core
 
 				entity.Position = (Vector2)entity.Component.transform.position;
 			}
+		}
+
+		public static void SpawnEntity(Entity entity, EntityComponent entityPrefab)
+		{
+			var component = GameObject.Instantiate(entityPrefab, Utils.GridToWorldPosition(entity.Position), Quaternion.identity);
+			component.name = entity.Name;
+
+			component.SpriteRenderer.sprite = entity.Sprite;
+			component.SpriteRenderer.material = GameObject.Instantiate(component.SpriteRenderer.material);
+			component.SpriteRenderer.material.SetColor("ReplacementColor2", entity.Color);
+
+			component.RecruitmentRadiusRenderer.transform.localScale = new Vector2(entity.RecruitmentRadius * 2, entity.RecruitmentRadius * 2);
+
+			component.Collider = entity.ColliderType switch
+			{
+				1 => component.CircleCollider,
+				_ => component.BoxCollider,
+			};
+			component.Collider.gameObject.SetActive(true);
+
+			if (entity.Static)
+			{
+				component.gameObject.isStatic = true;
+				component.Rigidbody.bodyType = RigidbodyType2D.Static;
+			}
+
+			component.Entity = entity;
+
+			entity.Component = component;
 		}
 	}
 }

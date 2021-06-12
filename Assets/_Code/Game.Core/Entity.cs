@@ -1,3 +1,4 @@
+using System.Security.Policy;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -21,9 +22,12 @@ namespace Game.Core
 		public Alliances Alliance;
 		public int HealthCurrent = 1;
 		public int HealthMax = 1;
-		public bool Destroyed;
 		public float AttackTimestamp;
 		public float AttackCooldown = 0.5f;
+		public int SortingOrder;
+		public bool FlaggedForDestroy;
+		public float DestroyTimestamp;
+		public int ColliderType;
 
 		public EntityComponent Component;
 	}

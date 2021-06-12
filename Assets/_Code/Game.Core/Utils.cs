@@ -47,28 +47,6 @@ namespace Game.Core
 			return (x % m + m) % m;
 		}
 
-		public static void SpawnEntity(Entity entity, EntityComponent entityPrefab)
-		{
-			var component = GameObject.Instantiate(entityPrefab, GridToWorldPosition(entity.Position), Quaternion.identity);
-			component.name = entity.Name;
-
-			component.SpriteRenderer.sprite = entity.Sprite;
-			component.SpriteRenderer.material = GameObject.Instantiate(component.SpriteRenderer.material);
-			component.SpriteRenderer.material.SetColor("ReplacementColor2", entity.Color);
-
-			component.RecruitmentRadiusRenderer.transform.localScale = new Vector2(entity.RecruitmentRadius * 2, entity.RecruitmentRadius * 2);
-
-			if (entity.Static)
-			{
-				component.gameObject.isStatic = true;
-				component.Rigidbody.bodyType = RigidbodyType2D.Static;
-			}
-
-			component.Entity = entity;
-
-			entity.Component = component;
-		}
-
 		public static float3 GridToWorldPosition(float2 position, float z = 0)
 		{
 			return GridToWorldPosition(position.x, position.y, z);

@@ -8,12 +8,14 @@ namespace Game.Core
 		public SpriteRenderer SpriteRenderer;
 		public Animator Animator;
 		public Rigidbody2D Rigidbody;
-		public Collider2D Collider;
+		public Collider2D BoxCollider;
+		public Collider2D CircleCollider;
 		public FlockAgent FlockAgent;
 		public SpriteRenderer RecruitmentRadiusRenderer;
 		public Canvas UI;
 		public Slider HealthSlider;
 
+		[HideInInspector] public Collider2D Collider;
 		[HideInInspector] public Entity Entity;
 	}
 }
