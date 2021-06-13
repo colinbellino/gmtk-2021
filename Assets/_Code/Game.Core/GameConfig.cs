@@ -18,6 +18,8 @@ namespace Game.Core
 		public Sprite CopSprite;
 		public Sprite ProjectileSprite;
 		public Sprite ExitSprite;
+		public Color[] SkinColors;
+		public Color[] HairColors;
 
 		[Header("Audio")]
 		public AudioMixer AudioMixer;

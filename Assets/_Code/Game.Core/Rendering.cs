@@ -42,7 +42,9 @@ namespace Game.Core
 			component.SpriteRenderer.material = GameObject.Instantiate(component.SpriteRenderer.material);
 			if (entity.ColorSwap)
 			{
+				component.SpriteRenderer.material.SetColor("ReplacementColor1", entity.ColorHair);
 				component.SpriteRenderer.material.SetColor("ReplacementColor2", entity.Color);
+				component.SpriteRenderer.material.SetColor("ReplacementColor3", entity.ColorSkin);
 			}
 
 			component.RecruitmentRadiusRenderer.transform.localScale = new Vector2(entity.RecruitmentRadius * 2, entity.RecruitmentRadius * 2);
