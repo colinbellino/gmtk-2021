@@ -62,6 +62,7 @@ namespace Game.Core.StateMachines.Game
 				ColliderType = 1,
 				MoveSpeed = 4,
 				AttackRadius = 1f,
+				CastShadow = true,
 			};
 			_state.Entities.Add(leader);
 
@@ -83,6 +84,7 @@ namespace Game.Core.StateMachines.Game
 					ColliderType = 1,
 					MoveSpeed = 10,
 					AttackRadius = 1f,
+					CastShadow = true,
 				};
 				_state.Entities.Add(entity);
 			}
@@ -106,6 +108,7 @@ namespace Game.Core.StateMachines.Game
 					ShootOnSight = true,
 					AttackRadius = 8,
 					CanBeHit = true,
+					CastShadow = true,
 				};
 				_state.Entities.Add(entity);
 			}
@@ -140,7 +143,7 @@ namespace Game.Core.StateMachines.Game
 					RigidbodyType = RigidbodyType2D.Static,
 					Sprite = _config.ExitSprite,
 					TriggerVictory = true,
-					AttackRadius = 0.5f,
+					AttackRadius = 1f,
 				};
 				_state.Entities.Add(entity);
 			}
@@ -289,6 +292,7 @@ namespace Game.Core.StateMachines.Game
 				{
 					entity.Component.Animator.Play("Destroy");
 					entity.FlaggedForDestroy = true;
+					entity.CastShadow = false;
 					entity.DestroyTimestamp = Time.time + 0.5f;
 				}
 
@@ -400,6 +404,7 @@ namespace Game.Core.StateMachines.Game
 							AttackOnCollision = true,
 							Direction = direction,
 							MoveSpeed = 15f,
+							CastShadow = false,
 						};
 						projectile.Velocity = direction * projectile.MoveSpeed;
 						Rendering.SpawnEntity(projectile, _config.EntityPrefab.GetComponent<EntityComponent>());

@@ -37,8 +37,8 @@ ScriptedImporter:
     spriteTessellationDetail: 0
     spriteExtrude: 1
     spriteMeshType: 1
-    spriteAlignment: 0
-    spritePivot: {x: 0, y: 0}
+    spriteAlignment: 7
+    spritePivot: {x: 8, y: 12}
     spriteBorder: {x: 0, y: 0, z: 0, w: 0}
     spriteGenerateFallbackPhysicsShape: 1
     aniso: 1
@@ -79,6 +79,6 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0.5}
     border: {x: 0, y: 0, z: 0, w: 0}
     tessellationDetail: 0
-    spriteID: 9f97038ac4103274fb8ab9be5cc54ecf
+    spriteID: bd095e909bb4bf94f9c0e6a1f14c41ba
   spriteRects: []
   selectedImporter: 1

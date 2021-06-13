@@ -37,8 +37,8 @@ ScriptedImporter:
     spriteTessellationDetail: 0
     spriteExtrude: 1
     spriteMeshType: 1
-    spriteAlignment: 0
-    spritePivot: {x: 0, y: 0}
+    spriteAlignment: 7
+    spritePivot: {x: 8, y: 12}
     spriteBorder: {x: 0, y: 0, z: 0, w: 0}
     spriteGenerateFallbackPhysicsShape: 1
     aniso: 1
@@ -79,6 +79,19 @@ ScriptedImporter:
     pivot: {x: 0.5, y: 0.5}
     border: {x: 0, y: 0, z: 0, w: 0}
     tessellationDetail: 0
-    spriteID: 49b761c055c7f7a40a2ff86170d9bb01
-  spriteRects: []
+    spriteID: 30ec89bf7a9643542b0546dcb5a943e3
+  spriteRects:
+  - name: Follower
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 16
+      height: 16
+    spriteID: ac577a9791654f24db31bbb513afe6a6
+    internalID: 0
   selectedImporter: 1

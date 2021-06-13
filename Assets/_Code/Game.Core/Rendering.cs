@@ -24,11 +24,22 @@ namespace Game.Core
 				{
 					entity.Component.transform.right = (Vector2)entity.Direction;
 					entity.Component.Rigidbody.velocity = entity.Velocity;
-					if (entity.Velocity.x != 0 || entity.Velocity.y != 0)
+
+					if (entity.FlaggedForDestroy == false && Time.time > entity.AttackTimestamp)
 					{
-						entity.Component.SpriteRenderer.flipX = entity.Velocity.x < 0;
+						if (entity.Velocity.x == 0 && entity.Velocity.y == 0)
+						{
+							entity.Component.Animator.Play("Idle");
+						}
+						else
+						{
+							entity.Component.SpriteRenderer.flipX = entity.Velocity.x < 0;
+							entity.Component.Animator.Play("Run");
+						}
 					}
 				}
+
+				entity.Component.ShadowSpriteRenderer.gameObject.SetActive(entity.CastShadow);
 
 				entity.Component.UI.gameObject.SetActive(entity.HealthCurrent != entity.HealthMax && entity.HealthCurrent > 0);
 				entity.Component.HealthSlider.value = (float)entity.HealthCurrent / entity.HealthMax;
@@ -61,6 +72,7 @@ namespace Game.Core
 			};
 			component.Collider.transform.localScale = Vector3.one * entity.ColliderScale;
 			component.Collider.gameObject.SetActive(true);
+
 
 			component.Rigidbody.bodyType = entity.RigidbodyType;
 			component.gameObject.isStatic = entity.RigidbodyType == RigidbodyType2D.Static;

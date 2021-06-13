@@ -36,6 +36,7 @@ namespace Game.Core
 		public float2 Direction = Vector2.right;
 		public float2 FlockDirection;
 		public bool TriggerVictory;
+		public bool CastShadow;
 
 		public EntityComponent Component;
 	}
