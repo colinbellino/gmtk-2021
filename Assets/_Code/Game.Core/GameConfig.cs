@@ -1,5 +1,4 @@
-﻿using UnityEditor.Animations;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Audio;
 
 namespace Game.Core
@@ -23,8 +22,8 @@ namespace Game.Core
 		public Sprite ExitSprite;
 		public Color[] SkinColors;
 		public Color[] HairColors;
-		public AnimatorController HumanAnimatorController;
-		public AnimatorController StaticAnimatorController;
+		public RuntimeAnimatorController HumanAnimatorController;
+		public RuntimeAnimatorController StaticAnimatorController;
 
 		[Header("Audio")]
 		public AudioMixer AudioMixer;

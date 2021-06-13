@@ -1,5 +1,4 @@
 using Unity.Mathematics;
-using UnityEditor.Animations;
 using UnityEngine;
 
 namespace Game.Core
@@ -38,7 +37,7 @@ namespace Game.Core
 		public float2 FlockDirection;
 		public bool TriggerVictory;
 		public bool CastShadow;
-		public AnimatorController AnimatorController;
+		public RuntimeAnimatorController AnimatorController;
 		public bool Human;
 
 		public EntityComponent Component;
