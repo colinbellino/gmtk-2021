@@ -37,6 +37,8 @@ MonoBehaviour:
   - {r: 0.6886792, g: 0.6735196, b: 0.6735196, a: 1}
   - {r: 0.21698111, g: 0, b: 0, a: 1}
   - {r: 0.2392157, g: 0.17254902, b: 0.14509805, a: 1}
+  HumanAnimatorController: {fileID: 9100000, guid: 5936c40fb6763394f92aec07089b4033, type: 2}
+  StaticAnimatorController: {fileID: 9100000, guid: fe36e2c7f3e90e84dbeca4f4fc48003b, type: 2}
   AudioMixer: {fileID: 24100000, guid: c00711887b3714031932c58a1ac16396, type: 2}
   MusicAudioMixerGroup: {fileID: -1804572004088458924, guid: c00711887b3714031932c58a1ac16396, type: 2}
   SoundsAudioMixerGroup: {fileID: 3053297684183750015, guid: c00711887b3714031932c58a1ac16396, type: 2}

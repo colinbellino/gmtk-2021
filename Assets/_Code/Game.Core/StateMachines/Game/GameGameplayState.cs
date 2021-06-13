@@ -63,6 +63,7 @@ namespace Game.Core.StateMachines.Game
 				MoveSpeed = 4,
 				AttackRadius = 1f,
 				CastShadow = true,
+				AnimatorController = _config.HumanAnimatorController,
 			};
 			_state.Entities.Add(leader);
 
@@ -85,6 +86,7 @@ namespace Game.Core.StateMachines.Game
 					MoveSpeed = 10,
 					AttackRadius = 1f,
 					CastShadow = true,
+					AnimatorController = _config.HumanAnimatorController,
 				};
 				_state.Entities.Add(entity);
 			}
@@ -109,6 +111,7 @@ namespace Game.Core.StateMachines.Game
 					AttackRadius = 8,
 					CanBeHit = true,
 					CastShadow = true,
+					AnimatorController = _config.HumanAnimatorController,
 				};
 				_state.Entities.Add(entity);
 			}
@@ -126,6 +129,7 @@ namespace Game.Core.StateMachines.Game
 					CanBeHit = true,
 					HealthCurrent = 4,
 					HealthMax = 4,
+					AnimatorController = _config.StaticAnimatorController,
 				};
 				_state.Entities.Add(entity);
 			}
@@ -144,6 +148,7 @@ namespace Game.Core.StateMachines.Game
 					Sprite = _config.ExitSprite,
 					TriggerVictory = true,
 					AttackRadius = 1f,
+					AnimatorController = _config.StaticAnimatorController,
 				};
 				_state.Entities.Add(entity);
 			}
@@ -331,6 +336,7 @@ namespace Game.Core.StateMachines.Game
 
 							var damage = 1;
 							otherEntity.HealthCurrent = math.max(0, otherEntity.HealthCurrent - damage);
+							otherEntity.Component.Animator.Play("Hit");
 						}
 
 						UnityEngine.Debug.Log(entity.Name + " => " + collider.name);
@@ -406,6 +412,7 @@ namespace Game.Core.StateMachines.Game
 							Direction = direction,
 							MoveSpeed = 15f,
 							CastShadow = false,
+							AnimatorController = _config.StaticAnimatorController,
 						};
 						projectile.Velocity = direction * projectile.MoveSpeed;
 						Rendering.SpawnEntity(projectile, _config.EntityPrefab.GetComponent<EntityComponent>());

@@ -77,6 +77,8 @@ namespace Game.Core
 			component.Rigidbody.bodyType = entity.RigidbodyType;
 			component.gameObject.isStatic = entity.RigidbodyType == RigidbodyType2D.Static;
 
+			component.Animator.runtimeAnimatorController = entity.AnimatorController;
+
 			component.Entity = entity;
 
 			entity.Component = component;
