@@ -25,14 +25,6 @@ namespace Game.Core.StateMachines.Game
 			GraphicsSettings.transparencySortMode = TransparencySortMode.CustomAxis;
 			GraphicsSettings.transparencySortAxis = new Vector3(0.0f, 1.0f, 0.0f);
 
-			if (_config.HideObstacleLayer || Utils.IsDevBuild() == false)
-			{
-				foreach (var obstacle in GameObject.FindGameObjectsWithTag("Obstacle"))
-				{
-					obstacle.GetComponent<SpriteRenderer>().enabled = false;
-				}
-			}
-
 			if (IsDevBuild())
 			{
 				// _ui.ShowDebug();

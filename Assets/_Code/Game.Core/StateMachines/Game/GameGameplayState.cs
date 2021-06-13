@@ -21,8 +21,6 @@ namespace Game.Core.StateMachines.Game
 		{
 			await base.Enter();
 
-			_ = _ui.FadeOut();
-
 			_isTransitioning = false;
 			if (_levelsContainer == null)
 			{
@@ -35,13 +33,18 @@ namespace Game.Core.StateMachines.Game
 				level.gameObject.SetActive(levelIndex == _state.CurrentLevelIndex);
 			}
 
+			if (_config.HideObstacleLayer || Utils.IsDevBuild() == false)
+			{
+				foreach (var obstacle in GameObject.FindGameObjectsWithTag("Obstacle"))
+				{
+					obstacle.GetComponent<SpriteRenderer>().enabled = false;
+				}
+			}
+
 			if (_state.Scores == null)
 			{
 				_state.Scores = new Score[_levelsContainer.childCount];
 			}
-
-			// _ui.ShowDebug();
-			_controls.Gameplay.Enable();
 
 			_state.Entities = new List<Entity>();
 
@@ -161,6 +164,9 @@ namespace Game.Core.StateMachines.Game
 			_followersFlock.FollowTarget = leader;
 
 			_fogTilemap = GameObject.Find("Fog")?.GetComponent<Tilemap>();
+
+			_ = _ui.FadeOut();
+			_controls.Gameplay.Enable();
 		}
 
 		public override void Tick()

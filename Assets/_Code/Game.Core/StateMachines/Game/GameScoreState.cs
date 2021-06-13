@@ -10,13 +10,15 @@ namespace Game.Core.StateMachines.Game
 		{
 			await base.Enter();
 
+			Continue();
+
 			// _ui.SetDebugText("State: Victory");
-			await _ui.ShowVictory(_state.Scores[_state.CurrentLevelIndex].ToString());
+			// await _ui.ShowVictory(_state.Scores[_state.CurrentLevelIndex].ToString());
 
-			_ui.VictoryButton1.onClick.AddListener(Continue);
-			_ui.VictoryButton2.onClick.AddListener(Restart);
+			// _ui.VictoryButton1.onClick.AddListener(Continue);
+			// _ui.VictoryButton2.onClick.AddListener(Restart);
 
-			_ = _audioPlayer.StopMusic(5f);
+			// _ = _audioPlayer.StopMusic(5f);
 		}
 
 		public override async UniTask Exit()
