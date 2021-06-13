@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Tilemaps;
 
 namespace Game.Core.StateMachines.Game
 {
@@ -12,6 +13,7 @@ namespace Game.Core.StateMachines.Game
 		private Transform _levelsContainer;
 		private bool _isTransitioning;
 		private float _levelTimer;
+		private Tilemap _fogTilemap;
 
 		public GameGameplayState(GameFSM fsm, GameSingleton game) : base(fsm, game) { }
 
@@ -144,6 +146,8 @@ namespace Game.Core.StateMachines.Game
 			}
 
 			_followersFlock.FollowTarget = leader;
+
+			_fogTilemap = GameObject.Find("Fog")?.GetComponent<Tilemap>();
 		}
 
 		public override void Tick()
@@ -151,8 +155,6 @@ namespace Game.Core.StateMachines.Game
 			base.Tick();
 
 			_levelTimer += Time.deltaTime;
-
-			var moveInput = _controls.Gameplay.Move.ReadValue<Vector2>();
 
 			if (Keyboard.current.f1Key.wasPressedThisFrame)
 			{
@@ -216,6 +218,19 @@ namespace Game.Core.StateMachines.Game
 
 				if (entity.PlayerControlled)
 				{
+					if (_fogTilemap != null)
+					{
+						for (int x = -3; x < 3; x++)
+						{
+							for (int y = -3; y < 3; y++)
+							{
+								var pos = new Vector3(entity.Position.x + x, entity.Position.y + y, 0);
+								var cellPosition = _fogTilemap.WorldToCell(pos);
+								_fogTilemap.SetTile(cellPosition, null);
+							}
+						}
+					}
+
 					if (entity.HealthCurrent == 0)
 					{
 						GameOver();
@@ -224,6 +239,7 @@ namespace Game.Core.StateMachines.Game
 					// Movement
 					if (Time.time > entity.AttackTimestamp)
 					{
+						var moveInput = _controls.Gameplay.Move.ReadValue<Vector2>();
 						entity.Velocity = (float2)moveInput * entity.MoveSpeed;
 					}
 

@@ -1,0 +1,339 @@
+fileFormatVersion: 2
+guid: aaf5b52f9f5994b99a9a989218f1b1b9
+ScriptedImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5190367753085692189
+    second: Fog16x16_0
+  - first:
+      213: -2916861028365427013
+    second: Fog16x16_1
+  - first:
+      213: -3555823012796421694
+    second: Fog16x16_2
+  - first:
+      213: -5895224541471440867
+    second: Fog16x16_3
+  - first:
+      213: 4978119977961674127
+    second: Fog16x16_4
+  - first:
+      213: 5652670609055571607
+    second: Fog16x16_5
+  - first:
+      213: 8275629682772602431
+    second: Fog16x16_6
+  - first:
+      213: 4869292133795480416
+    second: Fog16x16_7
+  - first:
+      213: 1990220440841891954
+    second: Fog16x16_8
+  - first:
+      213: -5190367753085692189
+    second: Fog16x16_0
+  - first:
+      213: -2916861028365427013
+    second: Fog16x16_1
+  - first:
+      213: -3555823012796421694
+    second: Fog16x16_2
+  - first:
+      213: -5895224541471440867
+    second: Fog16x16_3
+  - first:
+      213: 4978119977961674127
+    second: Fog16x16_4
+  - first:
+      213: 5652670609055571607
+    second: Fog16x16_5
+  - first:
+      213: 8275629682772602431
+    second: Fog16x16_6
+  - first:
+      213: 4869292133795480416
+    second: Fog16x16_7
+  - first:
+      213: 1990220440841891954
+    second: Fog16x16_8
+  - first:
+      213: -2814994725654484393
+    second: Fog16x16_9
+  - first:
+      213: -2636352619960921188
+    second: Fog16x16_10
+  - first:
+      213: 4794242431265962235
+    second: Fog16x16_11
+  - first:
+      213: -8785669424612313306
+    second: Fog16x16_12
+  - first:
+      213: -2614802358909316704
+    second: Fog16x16_13
+  - first:
+      213: 2623034984474245880
+    second: Fog16x16_14
+  - first:
+      213: -5322088858985288672
+    second: Fog16x16_15
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: d1956ce1ff810451f9738b29e9df561a, type: 3}
+  settings:
+    importType: 0
+    transparencyMode: 0
+    transparentColor: {r: 1, g: 0, b: 1, a: 1}
+    pixelsPerUnit: 16
+    spriteAlignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    generateAnimations: 1
+    createAnimationAssets: 0
+    bindType: 0
+    animType: 0
+    baseAnimator: {instanceID: 0}
+    buildAtlas: 0
+    tileSize: {x: 8, y: 8}
+    tileNameType: 0
+    tileEmpty: 0
+  textureImporterSettings:
+    seamlessCubemap: 0
+    mipmapBias: 0.5
+    wrapMode: 1
+    wrapModeU: 0
+    wrapModeV: 0
+    wrapModeW: 0
+    alphaIsTransparency: 1
+    spriteMode: 2
+    spritePixelsPerUnit: 16
+    spriteTessellationDetail: 0
+    spriteExtrude: 1
+    spriteMeshType: 1
+    spriteAlignment: 0
+    spritePivot: {x: 0, y: 0}
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 1
+    aniso: 1
+    filterMode: 0
+    cubemapConvolution: 0
+    textureType: 8
+    textureShape: 1
+    mipmapFilter: 0
+    mipmapEnabled: 0
+    sRGBTexture: 1
+    fadeOut: 0
+    borderMipmap: 0
+    mipMapsPreserveCoverage: 0
+    mipmapFadeDistanceStart: 1
+    alphaTestReferenceValue: 1
+    convertToNormalMap: 0
+    heightmapScale: 0
+    normalMapFilter: 0
+    alphaSource: 1
+    singleChannelComponent: 0
+    readable: 0
+    streamingMipmaps: 0
+    streamingMipmapsPriority: 0
+    npotScale: 0
+    generateCubemap: 0
+    mipmapFadeDistanceEnd: 3
+  animationSettings: []
+  texture: {instanceID: 0}
+  spriteImportData:
+  - name: Fog16x16_0
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 48
+      width: 16
+      height: 16
+    alignment: 0
+    pivot: {x: 0, y: 0}
+    border: {x: 0, y: 0, z: 0, w: 0}
+    tessellationDetail: 0
+    spriteID: 3e65faf370c18f7b0800000000000000
+  - name: Fog16x16_1
+    rect:
+      serializedVersion: 2
+      x: 16
+      y: 48
+      width: 16
+      height: 16
+    alignment: 0
+    pivot: {x: 0, y: 0}
+    border: {x: 0, y: 0, z: 0, w: 0}
+    tessellationDetail: 0
+    spriteID: bbe1911595a3587d0800000000000000
+  - name: Fog16x16_2
+    rect:
+      serializedVersion: 2
+      x: 32
+      y: 48
+      width: 16
+      height: 16
+    alignment: 0
+    pivot: {x: 0, y: 0}
+    border: {x: 0, y: 0, z: 0, w: 0}
+    tessellationDetail: 0
+    spriteID: 2c92c163fcd27aec0800000000000000
+  - name: Fog16x16_3
+    rect:
+      serializedVersion: 2
+      x: 48
+      y: 48
+      width: 16
+      height: 16
+    alignment: 0
+    pivot: {x: 0, y: 0}
+    border: {x: 0, y: 0, z: 0, w: 0}
+    tessellationDetail: 0
+    spriteID: d100e668384ff2ea0800000000000000
+  - name: Fog16x16_4
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 32
+      width: 16
+      height: 16
+    alignment: 0
+    pivot: {x: 0, y: 0}
+    border: {x: 0, y: 0, z: 0, w: 0}
+    tessellationDetail: 0
+    spriteID: f855ea7aeb5d51540800000000000000
+  - name: Fog16x16_5
+    rect:
+      serializedVersion: 2
+      x: 16
+      y: 32
+      width: 16
+      height: 16
+    alignment: 0
+    pivot: {x: 0, y: 0}
+    border: {x: 0, y: 0, z: 0, w: 0}
+    tessellationDetail: 0
+    spriteID: 79e5c0548f1527e40800000000000000
+  - name: Fog16x16_6
+    rect:
+      serializedVersion: 2
+      x: 32
+      y: 32
+      width: 16
+      height: 16
+    alignment: 0
+    pivot: {x: 0, y: 0}
+    border: {x: 0, y: 0, z: 0, w: 0}
+    tessellationDetail: 0
+    spriteID: f3ee65ea951f8d270800000000000000
+  - name: Fog16x16_7
+    rect:
+      serializedVersion: 2
+      x: 48
+      y: 32
+      width: 16
+      height: 16
+    alignment: 0
+    pivot: {x: 0, y: 0}
+    border: {x: 0, y: 0, z: 0, w: 0}
+    tessellationDetail: 0
+    spriteID: 063cb76a563339340800000000000000
+  - name: Fog16x16_8
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 16
+      width: 16
+      height: 16
+    alignment: 0
+    pivot: {x: 0, y: 0}
+    border: {x: 0, y: 0, z: 0, w: 0}
+    tessellationDetail: 0
+    spriteID: 2703a1142feae9b10800000000000000
+  - name: Fog16x16_9
+    rect:
+      serializedVersion: 2
+      x: 16
+      y: 16
+      width: 16
+      height: 16
+    alignment: 0
+    pivot: {x: 0, y: 0}
+    border: {x: 0, y: 0, z: 0, w: 0}
+    tessellationDetail: 0
+    spriteID: 75a24c426312fe8d0800000000000000
+  - name: Fog16x16_10
+    rect:
+      serializedVersion: 2
+      x: 32
+      y: 16
+      width: 16
+      height: 16
+    alignment: 0
+    pivot: {x: 0, y: 0}
+    border: {x: 0, y: 0, z: 0, w: 0}
+    tessellationDetail: 0
+    spriteID: c931f88924bc96bd0800000000000000
+  - name: Fog16x16_11
+    rect:
+      serializedVersion: 2
+      x: 48
+      y: 16
+      width: 16
+      height: 16
+    alignment: 0
+    pivot: {x: 0, y: 0}
+    border: {x: 0, y: 0, z: 0, w: 0}
+    tessellationDetail: 0
+    spriteID: bf876ba1712988240800000000000000
+  - name: Fog16x16_12
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 16
+      height: 16
+    alignment: 0
+    pivot: {x: 0, y: 0}
+    border: {x: 0, y: 0, z: 0, w: 0}
+    tessellationDetail: 0
+    spriteID: 627f8ffe438031680800000000000000
+  - name: Fog16x16_13
+    rect:
+      serializedVersion: 2
+      x: 16
+      y: 0
+      width: 16
+      height: 16
+    alignment: 0
+    pivot: {x: 0, y: 0}
+    border: {x: 0, y: 0, z: 0, w: 0}
+    tessellationDetail: 0
+    spriteID: 0a15b5fbb1b56bbd0800000000000000
+  - name: Fog16x16_14
+    rect:
+      serializedVersion: 2
+      x: 32
+      y: 0
+      width: 16
+      height: 16
+    alignment: 0
+    pivot: {x: 0, y: 0}
+    border: {x: 0, y: 0, z: 0, w: 0}
+    tessellationDetail: 0
+    spriteID: 8fa7203cb64e66420800000000000000
+  - name: Fog16x16_15
+    rect:
+      serializedVersion: 2
+      x: 48
+      y: 0
+      width: 16
+      height: 16
+    alignment: 0
+    pivot: {x: 0, y: 0}
+    border: {x: 0, y: 0, z: 0, w: 0}
+    tessellationDetail: 0
+    spriteID: 02c2e1161642426b0800000000000000
+  spriteRects: []
+  selectedImporter: 1

@@ -51,6 +51,9 @@ TagManager:
   - name: Buildings
     uniqueID: 336438049
     locked: 0
+  - name: Fog
+    uniqueID: 1319545827
+    locked: 0
   - name: UI
     uniqueID: 364220141
     locked: 0
