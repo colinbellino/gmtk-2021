@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Unity.Mathematics;
 
 namespace Game.Core
 {
@@ -13,6 +12,9 @@ namespace Game.Core
 		public List<Entity> Entities;
 		public Score[] Scores;
 		public int CurrentLevelIndex;
+		public int FollowersCounter;
+		public int CopsCounter;
+		public float Timer;
 	}
 
 	public class Score

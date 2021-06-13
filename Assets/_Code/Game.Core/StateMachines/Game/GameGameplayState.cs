@@ -12,7 +12,6 @@ namespace Game.Core.StateMachines.Game
 	{
 		private Transform _levelsContainer;
 		private bool _isTransitioning;
-		private float _levelTimer;
 		private Tilemap _fogTilemap;
 
 		public GameGameplayState(GameFSM fsm, GameSingleton game) : base(fsm, game) { }
@@ -63,10 +62,11 @@ namespace Game.Core.StateMachines.Game
 				CanBeHit = true,
 				Alliance = Alliances.Ally,
 				ColliderType = 1,
-				MoveSpeed = 4,
+				MoveSpeed = 3,
 				AttackRadius = 1f,
 				CastShadow = true,
 				AnimatorController = _config.HumanAnimatorController,
+				Human = true,
 			};
 			_state.Entities.Add(leader);
 
@@ -90,6 +90,7 @@ namespace Game.Core.StateMachines.Game
 					AttackRadius = 1f,
 					CastShadow = true,
 					AnimatorController = _config.HumanAnimatorController,
+					Human = true,
 				};
 				_state.Entities.Add(entity);
 			}
@@ -115,6 +116,7 @@ namespace Game.Core.StateMachines.Game
 					CanBeHit = true,
 					CastShadow = true,
 					AnimatorController = _config.HumanAnimatorController,
+					Human = true,
 				};
 				_state.Entities.Add(entity);
 			}
@@ -173,7 +175,7 @@ namespace Game.Core.StateMachines.Game
 		{
 			base.Tick();
 
-			_levelTimer += Time.deltaTime;
+			_state.Timer += Time.deltaTime;
 
 			if (Keyboard.current.f1Key.wasPressedThisFrame)
 			{
@@ -301,6 +303,14 @@ namespace Game.Core.StateMachines.Game
 
 				if (entity.HealthCurrent <= 0 && entity.FlaggedForDestroy == false)
 				{
+					if (entity.Human && entity.Flock == _followersFlock)
+					{
+						_state.FollowersCounter += 1;
+					}
+					if (entity.Human && entity.Alliance == Alliances.Foe)
+					{
+						_state.CopsCounter += 1;
+					}
 					entity.Component.Animator.Play("Destroy");
 					entity.FlaggedForDestroy = true;
 					entity.CastShadow = false;
@@ -464,12 +474,12 @@ namespace Game.Core.StateMachines.Game
 				return;
 			}
 
-			_state.Scores[_state.CurrentLevelIndex] = new Score
-			{
-				Timer = _levelTimer,
-				// TODO: Check the range of followers
-				Followers = _state.Entities.Where(e => e.Flock == _followersFlock && e.HealthCurrent > 0).Count(),
-			};
+			// _state.Scores[_state.CurrentLevelIndex] = new Score
+			// {
+			// 	Timer = _levelTimer,
+			// 	// TODO: Check the range of followers
+			// 	Followers = _state.Entities.Where(e => e.Flock == _followersFlock && e.HealthCurrent > 0).Count(),
+			// };
 			_fsm.Fire(GameFSM.Triggers.NextLevel);
 		}
 

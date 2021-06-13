@@ -10,7 +10,8 @@ namespace Game.Core.StateMachines.Game
 		{
 			await base.Enter();
 
-			await _ui.ShowCredits();
+			var text = $"Thanks for playing!\n\n- Time: {_state.Timer:0.00}s\n- Mates lost: {_state.FollowersCounter}\n- Cops killed: {_state.CopsCounter}";
+			await _ui.ShowCredits(text);
 
 			_ui.CreditsButton1.onClick.AddListener(Restart);
 			_ui.CreditsButton2.onClick.AddListener(Quit);
@@ -29,6 +30,9 @@ namespace Game.Core.StateMachines.Game
 		private void Restart()
 		{
 			_state.CurrentLevelIndex = 0;
+			_state.Timer = 0;
+			_state.FollowersCounter = 0;
+			_state.CopsCounter = 0;
 
 			_fsm.Fire(GameFSM.Triggers.Retry);
 		}

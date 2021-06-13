@@ -39,6 +39,7 @@ namespace Game.Core
 		public bool TriggerVictory;
 		public bool CastShadow;
 		public AnimatorController AnimatorController;
+		public bool Human;
 
 		public EntityComponent Component;
 	}

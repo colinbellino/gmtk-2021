@@ -125,9 +125,9 @@ namespace Game.Core
 			await FadeOutPanel(_defeatPanel, duration);
 		}
 
-		public async UniTask ShowCredits()
+		public async UniTask ShowCredits(string text)
 		{
-			// _creditsText.text = text;
+			_creditsText.text = text;
 			await FadeInPanel(_creditsPanel, _creditsText, 0.5f);
 
 			EventSystem.current.SetSelectedGameObject(null);
