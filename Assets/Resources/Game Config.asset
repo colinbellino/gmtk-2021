@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DebugFSM: 0
   LockFPS: -1
-  HideObstacleLayer: 1
+  HideObstacleLayer: 0
   FogDistance: 6
   EntityPrefab: {fileID: 2177991408146733114, guid: 6bcb3d9248613448c99b3e87a73cfdae, type: 3}
   LeaderSprite: {fileID: -4574442888719707065, guid: 79dbc08978e2c4f2c95a86458ad812e8, type: 3}

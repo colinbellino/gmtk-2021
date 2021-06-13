@@ -111,7 +111,7 @@ namespace Game.Core.StateMachines.Game
 					AttackCooldown = 1f,
 					ColliderType = 1,
 					ShootOnSight = true,
-					AttackRadius = 8,
+					AttackRadius = 5,
 					CanBeHit = true,
 					CastShadow = true,
 					AnimatorController = _config.HumanAnimatorController,
@@ -349,7 +349,8 @@ namespace Game.Core.StateMachines.Game
 						entity.HealthCurrent = 0;
 						entity.Velocity = 0;
 						entity.AttackOnCollision = false;
-						entity.FlaggedForDestroy = true;
+
+						break;
 					}
 				}
 
