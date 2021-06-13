@@ -337,6 +337,7 @@ namespace Game.Core.StateMachines.Game
 						entity.HealthCurrent = 0;
 						entity.Velocity = 0;
 						entity.AttackOnCollision = false;
+						entity.FlaggedForDestroy = true;
 					}
 				}
 
