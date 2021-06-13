@@ -14,27 +14,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DebugFSM: 0
   LockFPS: -1
+  HideObstacleLayer: 1
+  FogDistance: 6
   EntityPrefab: {fileID: 2177991408146733114, guid: 6bcb3d9248613448c99b3e87a73cfdae, type: 3}
   LeaderSprite: {fileID: -4574442888719707065, guid: 79dbc08978e2c4f2c95a86458ad812e8, type: 3}
-  LeaderColor: {r: 0.31512636, g: 0.6226415, b: 0.10279457, a: 1}
+  LeaderColor: {r: 0.7294118, g: 0.3372549, b: 0.36862746, a: 1}
   FollowerSprite: {fileID: -4020430589020015918, guid: 687a098c013b04da48d846bf5008d947, type: 3}
   CrateSprite: {fileID: 6106740496235502331, guid: 3c9621d9801dc3f4ebe2b9c9c4b019da, type: 3}
-  CopColor: {r: 0.3372549, g: 0.40784317, b: 0.83921576, a: 1}
+  CopColor: {r: 0.22352941, g: 0.5529412, b: 0.64705884, a: 1}
   CopSprite: {fileID: 8055304294832652324, guid: 24902f6c93a984603b8c4e5f5b2ae14a, type: 3}
   ProjectileSprite: {fileID: -4711204389694023198, guid: 057c84a227f92f447a62b53cc75457ed, type: 3}
   ExitSprite: {fileID: -2279586401753507755, guid: 9840da970a73d43e5932f3e9b2314eda, type: 3}
   SkinColors:
   - {r: 0.93333334, g: 0.7647059, b: 0.6039216, a: 1}
-  - {r: 1, g: 0.6844641, b: 0.3820755, a: 1}
+  - {r: 0.6792453, g: 0.43157843, b: 0.1901032, a: 1}
   - {r: 0.7169812, g: 0.5144243, b: 0.32128873, a: 1}
   - {r: 0.5, g: 0.31045035, b: 0.12971699, a: 1}
-  - {r: 0.8584906, g: 0.72073585, b: 0.34420612, a: 1}
+  - {r: 0.9339623, g: 0.83195233, b: 0.55215377, a: 1}
   HairColors:
   - {r: 0.6745098, g: 0.19607843, b: 0.19607843, a: 1}
   - {r: 0.735849, g: 0.42070055, b: 0.010412939, a: 1}
-  - {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 1}
+  - {r: 0.6886792, g: 0.6735196, b: 0.6735196, a: 1}
   - {r: 0.21698111, g: 0, b: 0, a: 1}
-  - {r: 0, g: 0.07425316, b: 0.6226415, a: 1}
+  - {r: 0.2392157, g: 0.17254902, b: 0.14509805, a: 1}
   AudioMixer: {fileID: 24100000, guid: c00711887b3714031932c58a1ac16396, type: 2}
   MusicAudioMixerGroup: {fileID: -1804572004088458924, guid: c00711887b3714031932c58a1ac16396, type: 2}
   SoundsAudioMixerGroup: {fileID: 3053297684183750015, guid: c00711887b3714031932c58a1ac16396, type: 2}

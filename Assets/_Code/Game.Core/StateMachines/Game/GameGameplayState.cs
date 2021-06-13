@@ -60,9 +60,8 @@ namespace Game.Core.StateMachines.Game
 				CanBeHit = true,
 				Alliance = Alliances.Ally,
 				ColliderType = 1,
-				// SortingOrder = 1,
 				MoveSpeed = 4,
-				AttackRadius = 2f,
+				AttackRadius = 1f,
 			};
 			_state.Entities.Add(leader);
 
@@ -83,7 +82,7 @@ namespace Game.Core.StateMachines.Game
 					Alliance = Alliances.Ally,
 					ColliderType = 1,
 					MoveSpeed = 10,
-					AttackRadius = 2f,
+					AttackRadius = 1f,
 				};
 				_state.Entities.Add(entity);
 			}
@@ -124,7 +123,6 @@ namespace Game.Core.StateMachines.Game
 					CanBeHit = true,
 					HealthCurrent = 4,
 					HealthMax = 4,
-					// SortingOrder = 1,
 				};
 				_state.Entities.Add(entity);
 			}
@@ -211,7 +209,7 @@ namespace Game.Core.StateMachines.Game
 						}
 					}
 
-					if (targetsCount > 0)
+					if (entity.PlayerControlled || targetsCount > 0)
 					{
 						entity.AttackTimestamp = Time.time + entity.AttackCooldown;
 						entity.Component.Animator.Play("Attack");
@@ -227,9 +225,9 @@ namespace Game.Core.StateMachines.Game
 				{
 					if (_fogTilemap != null)
 					{
-						for (int x = -3; x < 3; x++)
+						for (int x = -_config.FogDistance; x < _config.FogDistance; x++)
 						{
-							for (int y = -3; y < 3; y++)
+							for (int y = -_config.FogDistance; y < _config.FogDistance; y++)
 							{
 								var pos = new Vector3(entity.Position.x + x, entity.Position.y + y, 0);
 								var cellPosition = _fogTilemap.WorldToCell(pos);

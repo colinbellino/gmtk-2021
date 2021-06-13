@@ -9,6 +9,8 @@ namespace Game.Core
 		[Header("Debug")]
 		public bool DebugFSM;
 		public int LockFPS = 60;
+		public bool HideObstacleLayer;
+		public int FogDistance = 5;
 		public GameObject EntityPrefab;
 		public Sprite LeaderSprite;
 		public Color LeaderColor;
