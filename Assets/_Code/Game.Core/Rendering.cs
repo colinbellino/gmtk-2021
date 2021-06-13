@@ -24,6 +24,10 @@ namespace Game.Core
 				{
 					entity.Component.transform.right = (Vector2)entity.Direction;
 					entity.Component.Rigidbody.velocity = entity.Velocity;
+					if (entity.Velocity.x != 0 || entity.Velocity.y != 0)
+					{
+						entity.Component.SpriteRenderer.flipX = entity.Velocity.x < 0;
+					}
 				}
 
 				entity.Component.UI.gameObject.SetActive(entity.HealthCurrent != entity.HealthMax && entity.HealthCurrent > 0);
