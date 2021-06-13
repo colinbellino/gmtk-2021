@@ -50,13 +50,14 @@ namespace Game.Core.StateMachines.Game
 				Position = (Vector2)leaderSpawner.transform.position,
 				PlayerControlled = true,
 				Color = _config.LeaderColor,
+				ColorSwap = true,
 				RecruitmentRadius = 2f,
 				Sprite = _config.LeaderSprite,
 				CanBeHit = true,
 				Alliance = Alliances.Ally,
 				ColliderType = 1,
-				SortingOrder = 1,
-				MoveSpeed = 10,
+				// SortingOrder = 1,
+				MoveSpeed = 4,
 				AttackRadius = 2f,
 			};
 			_state.Entities.Add(leader);
@@ -70,6 +71,7 @@ namespace Game.Core.StateMachines.Game
 					Name = "Follower " + i,
 					Position = (Vector2)spawner.transform.position,
 					Color = _config.LeaderColor,
+					ColorSwap = true,
 					WillFollowerLeader = true,
 					Sprite = _config.FollowerSprite,
 					Alliance = Alliances.Ally,
@@ -89,6 +91,7 @@ namespace Game.Core.StateMachines.Game
 					Name = "Cop " + i,
 					Position = (Vector2)spawner.transform.position,
 					Color = _config.CopColor,
+					ColorSwap = true,
 					Sprite = _config.CopSprite,
 					Alliance = Alliances.Foe,
 					ColliderType = 1,
@@ -112,7 +115,7 @@ namespace Game.Core.StateMachines.Game
 					CanBeHit = true,
 					HealthCurrent = 4,
 					HealthMax = 4,
-					SortingOrder = 1,
+					// SortingOrder = 1,
 				};
 				_state.Entities.Add(entity);
 			}
@@ -125,6 +128,8 @@ namespace Game.Core.StateMachines.Game
 				{
 					Name = "Exit " + i,
 					Position = (Vector2)spawner.transform.position,
+					ColorSwap = true,
+					Color = _config.LeaderColor,
 					RigidbodyType = RigidbodyType2D.Static,
 					Sprite = _config.ExitSprite,
 					TriggerVictory = true,

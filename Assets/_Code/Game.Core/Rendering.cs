@@ -40,7 +40,10 @@ namespace Game.Core
 
 			component.SpriteRenderer.sprite = entity.Sprite;
 			component.SpriteRenderer.material = GameObject.Instantiate(component.SpriteRenderer.material);
-			component.SpriteRenderer.material.SetColor("ReplacementColor2", entity.Color);
+			if (entity.ColorSwap)
+			{
+				component.SpriteRenderer.material.SetColor("ReplacementColor2", entity.Color);
+			}
 
 			component.RecruitmentRadiusRenderer.transform.localScale = new Vector2(entity.RecruitmentRadius * 2, entity.RecruitmentRadius * 2);
 			component.AttackRadiusRenderer.transform.localScale = new Vector2(entity.AttackRadius * 2, entity.AttackRadius * 2);

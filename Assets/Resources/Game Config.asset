@@ -15,14 +15,14 @@ MonoBehaviour:
   DebugFSM: 0
   LockFPS: -1
   EntityPrefab: {fileID: 2177991408146733114, guid: 6bcb3d9248613448c99b3e87a73cfdae, type: 3}
-  LeaderSprite: {fileID: 4827980482346254395, guid: 2eabdfb626b484ac5b0591bc58a715a5, type: 3}
-  LeaderColor: {r: 0.41568628, g: 0.74509805, b: 0.1882353, a: 1}
-  FollowerSprite: {fileID: -8964298720854551499, guid: c4d5d473c769f405b971b2580baf3d5e, type: 3}
+  LeaderSprite: {fileID: -4574442888719707065, guid: 79dbc08978e2c4f2c95a86458ad812e8, type: 3}
+  LeaderColor: {r: 0.31512636, g: 0.6226415, b: 0.10279457, a: 1}
+  FollowerSprite: {fileID: -4020430589020015918, guid: 687a098c013b04da48d846bf5008d947, type: 3}
   CrateSprite: {fileID: 6106740496235502331, guid: 3c9621d9801dc3f4ebe2b9c9c4b019da, type: 3}
   CopColor: {r: 0.3372549, g: 0.40784317, b: 0.83921576, a: 1}
-  CopSprite: {fileID: -8964298720854551499, guid: c4d5d473c769f405b971b2580baf3d5e, type: 3}
+  CopSprite: {fileID: 8055304294832652324, guid: 24902f6c93a984603b8c4e5f5b2ae14a, type: 3}
   ProjectileSprite: {fileID: -4711204389694023198, guid: 057c84a227f92f447a62b53cc75457ed, type: 3}
-  ExitSprite: {fileID: -7050129638846038990, guid: df5ae761caeb2498eb0a1cdf3a2928fd, type: 3}
+  ExitSprite: {fileID: -2279586401753507755, guid: 9840da970a73d43e5932f3e9b2314eda, type: 3}
   AudioMixer: {fileID: 24100000, guid: c00711887b3714031932c58a1ac16396, type: 2}
   MusicAudioMixerGroup: {fileID: -1804572004088458924, guid: c00711887b3714031932c58a1ac16396, type: 2}
   SoundsAudioMixerGroup: {fileID: 3053297684183750015, guid: c00711887b3714031932c58a1ac16396, type: 2}

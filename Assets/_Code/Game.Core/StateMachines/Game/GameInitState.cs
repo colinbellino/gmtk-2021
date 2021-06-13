@@ -1,5 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Rendering;
 using static Game.Core.Utils;
 
 namespace Game.Core.StateMachines.Game
@@ -19,6 +20,15 @@ namespace Game.Core.StateMachines.Game
 			_state.InitialSoundVolume = _state.CurrentSoundVolume = _config.SoundVolume;
 
 			Time.timeScale = 1f;
+
+			// Source: https://forum.unity.com/threads/transparency-sort-mode-and-lightweight-render-pipeline.651700/?_ga=2.33709793.1917298031.1610550622-170523125.1537693866
+			GraphicsSettings.transparencySortMode = TransparencySortMode.CustomAxis;
+			GraphicsSettings.transparencySortAxis = new Vector3(0.0f, 1.0f, 0.0f);
+
+			foreach (var obstacle in GameObject.FindGameObjectsWithTag("Obstacle"))
+			{
+				obstacle.GetComponent<SpriteRenderer>().enabled = false;
+			}
 
 			if (IsDevBuild())
 			{

@@ -10,6 +10,7 @@ namespace Game.Core
 		public float2 Position;
 		public float2 Velocity;
 		public Color Color;
+		public bool ColorSwap;
 		public Flock Flock;
 		public float MoveSpeed;
 		public float RecruitmentRadius;

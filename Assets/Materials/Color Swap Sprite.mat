@@ -52,7 +52,7 @@ Material:
     - OriginalColor2_: {r: 0.24705875, g: 0.24705875, b: 0.454902, a: 1}
     - OriginalColor3: {r: 0.9333334, g: 0.76470596, b: 0.6039216, a: 1}
     - OriginalColor3_: {r: 0.8867924, g: 0.6705222, b: 0.46431106, a: 1}
-    - ReplacementColor1: {r: 0.8113208, g: 0.53538966, b: 0.049750824, a: 1}
-    - ReplacementColor2: {r: 0, g: 0.5849056, b: 0.0037844577, a: 1}
+    - ReplacementColor1: {r: 0.85098046, g: 0.34117648, b: 0.38823533, a: 1}
+    - ReplacementColor2: {r: 0.35686275, g: 0.43137258, b: 0.882353, a: 1}
     - ReplacementColor3: {r: 0.9333334, g: 0.76470596, b: 0.6039216, a: 1}
   m_BuildTextureStacks: []

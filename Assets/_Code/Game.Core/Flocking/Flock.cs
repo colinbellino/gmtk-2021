@@ -8,7 +8,7 @@ public class Flock : MonoBehaviour
 	[Range(10, 500)] public int startingCount = 250;
 	[Range(1f, 100f)] public float driveFactor = 10f;
 	[Range(1f, 100f)] public float maxSpeed = 5f;
-	[Range(1f, 10f)] public float neighborRadius = 1.5f;
+	[Range(0.1f, 10f)] public float neighborRadius = 1.5f;
 	[Range(0f, 1f)] public float avoidanceRadiusMultiplier = 0.5f;
 	[Range(0f, 1f)] public float attractionRadiusMultiplier = 0.5f;
 

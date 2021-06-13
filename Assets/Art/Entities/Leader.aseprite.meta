@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3c9621d9801dc3f4ebe2b9c9c4b019da
+guid: 79dbc08978e2c4f2c95a86458ad812e8
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -33,10 +33,10 @@ ScriptedImporter:
     wrapModeW: 0
     alphaIsTransparency: 1
     spriteMode: 1
-    spritePixelsPerUnit: 8
+    spritePixelsPerUnit: 16
     spriteTessellationDetail: 0
-    spriteExtrude: 0
-    spriteMeshType: 0
+    spriteExtrude: 1
+    spriteMeshType: 1
     spriteAlignment: 0
     spritePivot: {x: 0, y: 0}
     spriteBorder: {x: 0, y: 0, z: 0, w: 0}
@@ -68,17 +68,17 @@ ScriptedImporter:
   animationSettings: []
   texture: {instanceID: 0}
   spriteImportData:
-  - name: Crate
+  - name: Leader
     rect:
       serializedVersion: 2
       x: 0
       y: 0
-      width: 8
-      height: 8
+      width: 16
+      height: 16
     alignment: 0
     pivot: {x: 0.5, y: 0.5}
     border: {x: 0, y: 0, z: 0, w: 0}
     tessellationDetail: 0
-    spriteID: 285071eed1ace4bef9c14ad69466319e
+    spriteID: f49e2d14b76034ba993bfe6842f53ab7
   spriteRects: []
   selectedImporter: 1
