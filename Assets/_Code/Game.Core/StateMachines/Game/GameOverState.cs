@@ -10,20 +10,24 @@ namespace Game.Core.StateMachines.Game
 		{
 			await base.Enter();
 
-			_ui.SetDebugText("State: Defeat");
-			_ = _ui.ShowDefeat();
-			_ui.DefeatButton1.onClick.AddListener(Restart);
-			_ui.DefeatButton2.onClick.AddListener(Quit);
+			await UniTask.Delay(500);
+
+			Restart();
+
+			// _ui.SetDebugText("State: Defeat");
+			// _ = _ui.ShowDefeat();
+			// _ui.DefeatButton1.onClick.AddListener(Restart);
+			// _ui.DefeatButton2.onClick.AddListener(Quit);
 		}
 
 		public override async UniTask Exit()
 		{
 			await base.Exit();
 
-			await _ui.HideDefeat();
+			// await _ui.HideDefeat();
 
-			_ui.DefeatButton1.onClick.RemoveListener(Restart);
-			_ui.DefeatButton2.onClick.RemoveListener(Quit);
+			// _ui.DefeatButton1.onClick.RemoveListener(Restart);
+			// _ui.DefeatButton2.onClick.RemoveListener(Quit);
 		}
 
 		private void Restart()
