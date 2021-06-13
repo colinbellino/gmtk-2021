@@ -137,8 +137,8 @@ namespace Game.Core.StateMachines.Game
 				{
 					Name = "Exit " + i,
 					Position = (Vector2)spawner.transform.position,
-					ColorSwap = true,
-					Color = _config.LeaderColor,
+					// ColorSwap = true,
+					// Color = _config.LeaderColor,
 					RigidbodyType = RigidbodyType2D.Static,
 					Sprite = _config.ExitSprite,
 					TriggerVictory = true,
